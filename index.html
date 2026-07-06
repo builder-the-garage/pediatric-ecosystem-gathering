@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pediatric Healthcare Ecosystem · July 15</title>
+  <title>Bright Minds: Bioscience & Medtech Innovation · July 15</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
@@ -20,9 +20,7 @@
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { scroll-behavior: smooth; }
-
     body {
       font-family: 'Inter', -apple-system, sans-serif;
       background: var(--cream);
@@ -30,232 +28,166 @@
       -webkit-font-smoothing: antialiased;
       line-height: 1.6;
     }
-
     .serif { font-family: 'DM Serif Display', Georgia, serif; }
 
     /* ─── NAV ─── */
     nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 200;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 40px;
-      height: 56px;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px; height: 56px;
       background: var(--black);
       border-bottom: 1px solid rgba(255,255,255,0.06);
     }
     .nav-mark {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.5);
+      display: flex; align-items: center; gap: 8px;
+      font-size: 12px; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; color: rgba(255,255,255,0.5);
     }
-    .nav-mark-dot {
-      width: 6px; height: 6px;
-      background: var(--accent);
-      border-radius: 50%;
+    .nav-mark-dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; }
+    .nav-links { display: flex; gap: 24px; align-items: center; }
+    .nav-link {
+      font-size: 11px; font-weight: 500; color: rgba(255,255,255,0.4);
+      text-decoration: none; letter-spacing: 0.05em;
+      transition: color 0.15s;
     }
+    .nav-link:hover { color: rgba(255,255,255,0.75); }
     .nav-cta {
-      font-size: 12px;
-      font-weight: 500;
-      color: rgba(255,255,255,0.55);
-      text-decoration: none;
-      border: 1px solid rgba(255,255,255,0.15);
-      padding: 6px 16px;
-      border-radius: 3px;
-      letter-spacing: 0.02em;
+      font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.55);
+      text-decoration: none; border: 1px solid rgba(255,255,255,0.15);
+      padding: 6px 16px; border-radius: 3px; letter-spacing: 0.02em;
       transition: all 0.15s;
     }
-    .nav-cta:hover {
-      color: white;
-      border-color: rgba(255,255,255,0.4);
-    }
+    .nav-cta:hover { color: white; border-color: rgba(255,255,255,0.4); }
 
     /* ─── HERO ─── */
     .hero {
-      background: var(--black);
-      padding: 140px 40px 100px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
+      background: var(--black); padding: 140px 40px 100px;
+      text-align: center; position: relative; overflow: hidden;
     }
     .hero::before {
-      content: '';
-      position: absolute;
-      top: 56px; left: 0; right: 0;
-      height: 1px;
-      background: rgba(255,255,255,0.07);
+      content: ''; position: absolute; top: 56px; left: 0; right: 0;
+      height: 1px; background: rgba(255,255,255,0.07);
     }
     .hero-meta {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 28px;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 28px;
     }
-    .hero-rule {
-      width: 40px;
-      height: 1px;
-      background: rgba(255,255,255,0.15);
-      margin: 0 auto 32px;
-    }
+    .hero-rule { width: 40px; height: 1px; background: rgba(255,255,255,0.15); margin: 0 auto 32px; }
     .hero h1 {
       font-family: 'DM Serif Display', serif;
-      font-size: clamp(44px, 7vw, 88px);
-      font-weight: 400;
-      line-height: 1.05;
-      letter-spacing: -0.02em;
-      color: var(--white);
-      margin-bottom: 8px;
+      font-size: clamp(40px, 6vw, 80px); font-weight: 400;
+      line-height: 1.05; letter-spacing: -0.02em; color: var(--white); margin-bottom: 8px;
     }
-    .hero h1 em {
-      font-style: italic;
-      color: rgba(255,255,255,0.45);
-    }
+    .hero h1 em { font-style: italic; color: rgba(255,255,255,0.45); }
     .hero-sub {
-      font-size: 15px;
-      color: rgba(255,255,255,0.38);
-      margin: 32px auto 0;
-      max-width: 440px;
-      line-height: 1.75;
-      letter-spacing: 0.01em;
+      font-size: 15px; color: rgba(255,255,255,0.38);
+      margin: 32px auto 0; max-width: 500px; line-height: 1.75; letter-spacing: 0.01em;
     }
     .hero-details {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 24px;
-      margin-top: 52px;
-      padding-top: 40px;
-      border-top: 1px solid rgba(255,255,255,0.07);
-      flex-wrap: wrap;
+      display: flex; align-items: center; justify-content: center;
+      gap: 24px; margin-top: 52px; padding-top: 40px;
+      border-top: 1px solid rgba(255,255,255,0.07); flex-wrap: wrap;
     }
-    .hero-detail {
-      text-align: center;
-    }
+    .hero-detail { text-align: center; }
     .hero-detail-label {
-      font-size: 10px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.25);
-      margin-bottom: 4px;
+      font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+      color: rgba(255,255,255,0.25); margin-bottom: 4px;
     }
-    .hero-detail-value {
-      font-size: 14px;
-      font-weight: 500;
-      color: rgba(255,255,255,0.7);
-    }
-    .hero-sep {
-      width: 1px;
-      height: 32px;
-      background: rgba(255,255,255,0.1);
-    }
+    .hero-detail-value { font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.7); }
+    .hero-sep { width: 1px; height: 32px; background: rgba(255,255,255,0.1); }
     .hosts-line {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      margin-top: 20px;
+      display: flex; align-items: center; justify-content: center;
+      gap: 6px; margin-top: 20px;
     }
     .host-av {
-      width: 24px; height: 24px;
-      border-radius: 50%;
-      font-size: 10px;
-      font-weight: 700;
-      display: flex; align-items: center; justify-content: center;
-      color: white;
+      width: 24px; height: 24px; border-radius: 50%; font-size: 10px;
+      font-weight: 700; display: flex; align-items: center; justify-content: center; color: white;
     }
-    .hosts-text {
-      font-size: 12px;
-      color: rgba(255,255,255,0.3);
-      font-weight: 400;
-    }
+    .hosts-text { font-size: 12px; color: rgba(255,255,255,0.3); font-weight: 400; }
     .hosts-text strong { color: rgba(255,255,255,0.55); font-weight: 500; }
 
     /* ─── PULL QUOTE ─── */
     .pull-quote-section {
-      background: var(--cream);
-      padding: 80px 40px;
-      text-align: center;
-      border-bottom: 1px solid var(--border);
+      background: var(--cream); padding: 80px 40px;
+      text-align: center; border-bottom: 1px solid var(--border);
     }
-    .pull-quote-inner {
-      max-width: 680px;
-      margin: 0 auto;
-    }
+    .pull-quote-inner { max-width: 680px; margin: 0 auto; }
     .pull-quote-mark {
-      font-family: 'DM Serif Display', serif;
-      font-size: 80px;
-      line-height: 0.4;
-      color: var(--accent);
-      display: block;
-      margin-bottom: 24px;
-      opacity: 0.6;
+      font-family: 'DM Serif Display', serif; font-size: 80px;
+      line-height: 0.4; color: var(--accent); display: block;
+      margin-bottom: 24px; opacity: 0.6;
     }
     .pull-quote-text {
       font-family: 'DM Serif Display', serif;
-      font-size: clamp(20px, 2.5vw, 28px);
-      font-style: italic;
-      line-height: 1.5;
-      color: var(--ink);
-      font-weight: 400;
+      font-size: clamp(20px, 2.5vw, 28px); font-style: italic;
+      line-height: 1.5; color: var(--ink); font-weight: 400;
     }
     .pull-quote-attr {
-      margin-top: 20px;
-      font-size: 12px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--mid);
+      margin-top: 20px; font-size: 12px; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--mid);
     }
 
     /* ─── SECTION BASICS ─── */
-    .section {
-      padding: 80px 40px;
-    }
-    .section-inner {
-      max-width: 1080px;
-      margin: 0 auto;
-    }
+    .section { padding: 80px 40px; }
+    .section-inner { max-width: 1080px; margin: 0 auto; }
     .section-eyebrow {
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
+      font-size: 10px; font-weight: 600; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 20px;
+      display: flex; align-items: center; gap: 10px;
     }
     .section-eyebrow::after {
-      content: '';
-      flex: 1;
-      max-width: 40px;
-      height: 1px;
-      background: var(--accent);
-      opacity: 0.4;
+      content: ''; flex: 1; max-width: 40px; height: 1px;
+      background: var(--accent); opacity: 0.4;
     }
     .section-title {
       font-family: 'DM Serif Display', serif;
-      font-size: clamp(28px, 3.5vw, 44px);
-      font-weight: 400;
-      line-height: 1.15;
-      letter-spacing: -0.02em;
-      color: var(--ink);
-      margin-bottom: 12px;
+      font-size: clamp(28px, 3.5vw, 44px); font-weight: 400;
+      line-height: 1.15; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 12px;
     }
-    .section-desc {
-      font-size: 15px;
-      color: var(--mid);
-      max-width: 540px;
-      line-height: 1.75;
+    .section-desc { font-size: 15px; color: var(--mid); max-width: 540px; line-height: 1.75; }
+
+    /* ─── WHAT TO EXPECT ─── */
+    .expect-section {
+      background: var(--white);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .expect-intro {
+      font-size: 16px; line-height: 1.8; color: var(--mid);
+      max-width: 660px; margin-bottom: 56px;
+    }
+    .expect-intro strong { color: var(--ink); font-weight: 500; }
+    .steps-list { display: flex; flex-direction: column; gap: 0; }
+    .step-item {
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 0 28px;
+      padding: 32px 0;
+      border-top: 1px solid var(--border);
+    }
+    .step-item:last-child { border-bottom: 1px solid var(--border); }
+    .step-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 32px; font-style: italic; color: var(--accent);
+      opacity: 0.5; line-height: 1; padding-top: 4px;
+    }
+    .step-body {}
+    .step-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 20px; font-weight: 400; color: var(--ink);
+      margin-bottom: 8px; letter-spacing: -0.01em;
+    }
+    .step-desc { font-size: 14px; color: var(--mid); line-height: 1.75; max-width: 560px; }
+    .step-link {
+      display: inline-block; margin-top: 12px;
+      font-size: 12px; font-weight: 600; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--accent);
+      text-decoration: none; transition: opacity 0.15s;
+    }
+    .step-link:hover { opacity: 0.7; }
+    .step-note {
+      margin-top: 8px; font-size: 12px; color: var(--border);
+      font-style: italic;
     }
 
     /* ─── PROFILES ─── */
@@ -264,390 +196,319 @@
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
     }
-    .cluster-block {
-      margin-top: 56px;
-    }
+    .cluster-block { margin-top: 56px; }
     .cluster-block:first-child { margin-top: 40px; }
     .cluster-header {
-      display: flex;
-      align-items: baseline;
-      gap: 16px;
-      padding-bottom: 14px;
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 0;
+      display: flex; align-items: baseline; gap: 16px;
+      padding-bottom: 14px; border-bottom: 1px solid var(--border); margin-bottom: 0;
     }
-    .cluster-num {
-      font-family: 'DM Serif Display', serif;
-      font-size: 13px;
-      color: var(--accent);
-      font-style: italic;
-    }
-    .cluster-name {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--mid);
-    }
-
-    /* profile rows */
+    .cluster-num { font-family: 'DM Serif Display', serif; font-size: 13px; color: var(--accent); font-style: italic; }
+    .cluster-name { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mid); }
     .profile-row {
-      display: grid;
-      grid-template-columns: 36px 1fr auto;
-      align-items: start;
-      gap: 0 16px;
-      padding: 18px 0;
-      border-bottom: 1px solid var(--border);
-      cursor: pointer;
-      transition: background 0.12s;
+      display: grid; grid-template-columns: 36px 1fr auto;
+      align-items: start; gap: 0 16px;
+      padding: 18px 0; border-bottom: 1px solid var(--border);
+      cursor: pointer; transition: background 0.12s;
     }
     .profile-row:hover { background: rgba(184,92,56,0.03); }
     .profile-row.open { background: var(--accent-pale); }
     .p-av {
-      width: 36px; height: 36px;
-      border-radius: 50%;
+      width: 36px; height: 36px; border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
       font-size: 12px; font-weight: 700; color: white;
-      flex-shrink: 0;
-      margin-top: 2px;
+      flex-shrink: 0; margin-top: 2px;
     }
-    .p-main {}
     .p-name {
-      font-family: 'DM Serif Display', serif;
-      font-size: 18px;
-      font-weight: 400;
-      letter-spacing: -0.01em;
-      color: var(--ink);
-      line-height: 1.2;
-      margin-bottom: 3px;
+      font-family: 'DM Serif Display', serif; font-size: 18px; font-weight: 400;
+      letter-spacing: -0.01em; color: var(--ink); line-height: 1.2; margin-bottom: 3px;
     }
-    .p-org {
-      font-size: 12px;
-      color: var(--mid);
-      margin-bottom: 6px;
-    }
+    .p-org { font-size: 12px; color: var(--mid); margin-bottom: 6px; }
     .p-tags { display: flex; flex-wrap: wrap; gap: 4px; }
     .p-tag {
-      font-size: 10px;
-      font-weight: 500;
-      letter-spacing: 0.04em;
-      color: var(--mid);
-      background: var(--cream);
-      border: 1px solid var(--border);
-      padding: 2px 8px;
-      border-radius: 2px;
+      font-size: 10px; font-weight: 500; letter-spacing: 0.04em;
+      color: var(--mid); background: var(--cream); border: 1px solid var(--border);
+      padding: 2px 8px; border-radius: 2px;
     }
-    .profile-row.open .p-tag {
-      background: rgba(184,92,56,0.08);
-      border-color: rgba(184,92,56,0.2);
-      color: var(--accent);
-    }
-    .p-arrow {
-      font-size: 12px;
-      color: var(--border);
-      margin-top: 6px;
-      transition: transform 0.2s;
-      user-select: none;
-    }
+    .profile-row.open .p-tag { background: rgba(184,92,56,0.08); border-color: rgba(184,92,56,0.2); color: var(--accent); }
+    .p-arrow { font-size: 12px; color: var(--border); margin-top: 6px; transition: transform 0.2s; user-select: none; }
     .profile-row.open .p-arrow { transform: rotate(90deg); color: var(--accent); }
     .p-bio {
-      display: none;
-      grid-column: 2 / 4;
-      font-size: 13px;
-      color: var(--mid);
-      line-height: 1.7;
-      padding: 10px 0 4px;
-      border-top: 1px dashed var(--border);
-      margin-top: 10px;
+      display: none; grid-column: 2 / 4; font-size: 13px; color: var(--mid);
+      line-height: 1.7; padding: 10px 0 4px;
+      border-top: 1px dashed var(--border); margin-top: 10px;
     }
     .profile-row.open .p-bio { display: block; }
-
-    /* ─── THEMES ─── */
-    .themes-section {
-      background: var(--black);
+    .p-survey-answers {
+      margin-top: 16px; padding-top: 16px;
+      border-top: 1px solid var(--border);
     }
+    .p-survey-label {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 12px;
+    }
+    .p-survey-intro {
+      font-family: 'DM Serif Display', serif; font-size: 16px;
+      font-style: italic; color: var(--ink); line-height: 1.6; margin-bottom: 12px;
+    }
+    .p-answer-item { margin-bottom: 10px; }
+    .p-answer-q { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mid); margin-bottom: 3px; }
+    .p-answer-a { font-size: 13px; color: var(--ink); line-height: 1.65; }
+
+    /* ─── THEMES / THREE LENSES ─── */
+    .themes-section { background: var(--black); }
     .themes-section .section-eyebrow { color: var(--accent); }
     .themes-section .section-title { color: var(--white); }
     .themes-section .section-desc { color: rgba(255,255,255,0.35); }
-    .themes-grid {
+    .chapter-block {
       margin-top: 56px;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 40px;
     }
-    .theme-item {
-      padding: 36px 36px 36px 0;
-      border-right: 1px solid rgba(255,255,255,0.07);
-      padding-right: 36px;
+    .chapter-block:first-child { margin-top: 40px; }
+    .chapter-header {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 40px; margin-bottom: 32px;
     }
-    .theme-item:last-child { border-right: none; padding-right: 0; }
-    .theme-item + .theme-item { padding-left: 36px; }
-    .theme-num {
-      font-family: 'DM Serif Display', serif;
-      font-size: 11px;
-      font-style: italic;
-      color: var(--accent);
-      margin-bottom: 16px;
-      letter-spacing: 0.04em;
+    .chapter-left {}
+    .chapter-num {
+      font-family: 'DM Serif Display', serif; font-size: 11px;
+      font-style: italic; color: var(--accent); margin-bottom: 12px; letter-spacing: 0.04em;
     }
-    .theme-name {
-      font-family: 'DM Serif Display', serif;
-      font-size: 22px;
-      font-weight: 400;
-      color: var(--white);
-      line-height: 1.25;
-      margin-bottom: 14px;
-      letter-spacing: -0.01em;
+    .chapter-name {
+      font-family: 'DM Serif Display', serif; font-size: 26px; font-weight: 400;
+      color: var(--white); line-height: 1.2; margin-bottom: 12px; letter-spacing: -0.01em;
     }
-    .theme-desc {
-      font-size: 13px;
-      color: rgba(255,255,255,0.42);
-      line-height: 1.75;
+    .chapter-desc { font-size: 13px; color: rgba(255,255,255,0.42); line-height: 1.75; }
+    .chapter-right {}
+    .chapter-tension {
+      font-size: 13px; font-style: italic; color: rgba(255,255,255,0.3);
+      line-height: 1.65; padding-left: 16px;
+      border-left: 2px solid rgba(184,92,56,0.3);
     }
-    .theme-tension {
-      margin-top: 20px;
-      padding-top: 16px;
-      border-top: 1px solid rgba(255,255,255,0.07);
-      font-size: 12px;
-      font-style: italic;
-      color: rgba(255,255,255,0.3);
-      line-height: 1.65;
+
+    /* Topics list */
+    .topics-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 12px;
     }
+    .topics-label {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; color: rgba(255,255,255,0.25);
+    }
+    .topics-list { display: flex; flex-direction: column; gap: 2px; }
+    .topic-item {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 3px; overflow: hidden;
+      transition: border-color 0.15s;
+    }
+    .topic-item:hover { border-color: rgba(255,255,255,0.12); }
+    .topic-main {
+      display: flex; align-items: flex-start;
+      gap: 12px; padding: 14px 16px; cursor: pointer;
+    }
+    .topic-text { flex: 1; font-size: 13px; color: rgba(255,255,255,0.65); line-height: 1.6; }
+    .topic-cat {
+      font-size: 9px; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--accent); opacity: 0.7;
+      white-space: nowrap; padding-top: 2px;
+    }
+    .topic-actions {
+      display: flex; align-items: center; gap: 4px; flex-shrink: 0;
+    }
+    .vote-btn {
+      background: none; border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 2px; color: rgba(255,255,255,0.3);
+      font-size: 12px; padding: 3px 8px; cursor: pointer;
+      transition: all 0.15s; display: flex; align-items: center; gap: 4px;
+    }
+    .vote-btn:hover { border-color: rgba(255,255,255,0.3); color: rgba(255,255,255,0.7); }
+    .vote-btn.voted-up { background: rgba(184,92,56,0.2); border-color: var(--accent); color: var(--accent); }
+    .vote-btn.voted-down { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.2); color: rgba(255,255,255,0.4); }
+    .comment-toggle {
+      background: none; border: none; color: rgba(255,255,255,0.2);
+      font-size: 11px; cursor: pointer; padding: 3px 6px;
+      transition: color 0.15s; letter-spacing: 0.03em;
+    }
+    .comment-toggle:hover { color: rgba(255,255,255,0.5); }
+    .topic-comments {
+      display: none; border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 12px 16px 16px;
+    }
+    .topic-comments.open { display: block; }
+    .comment-item {
+      font-size: 12px; color: rgba(255,255,255,0.45); line-height: 1.6;
+      padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .comment-item:last-of-type { border-bottom: none; }
+    .comment-input-row { display: flex; gap: 8px; margin-top: 10px; }
+    .comment-input {
+      flex: 1; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 2px; color: white; font-family: inherit; font-size: 12px;
+      padding: 7px 12px; outline: none;
+    }
+    .comment-input::placeholder { color: rgba(255,255,255,0.2); }
+    .comment-input:focus { border-color: rgba(255,255,255,0.25); }
+    .comment-submit {
+      background: rgba(184,92,56,0.8); border: none; color: white;
+      font-family: inherit; font-size: 11px; font-weight: 600;
+      letter-spacing: 0.05em; padding: 7px 14px; border-radius: 2px;
+      cursor: pointer; transition: background 0.15s;
+    }
+    .comment-submit:hover { background: var(--accent); }
+
+    /* User-submitted topics */
+    .user-topic-item { border-color: rgba(184,92,56,0.2) !important; }
+    .user-topic-item .topic-cat { color: rgba(255,255,255,0.35); }
+    .add-topic-row {
+      margin-top: 12px; display: flex; gap: 8px;
+    }
+    .add-topic-input {
+      flex: 1; background: rgba(255,255,255,0.04); border: 1px dashed rgba(255,255,255,0.12);
+      border-radius: 2px; color: white; font-family: inherit; font-size: 12px;
+      padding: 10px 14px; outline: none;
+    }
+    .add-topic-input::placeholder { color: rgba(255,255,255,0.18); }
+    .add-topic-input:focus { border-color: rgba(255,255,255,0.25); border-style: solid; }
+    .add-topic-btn {
+      background: none; border: 1px solid rgba(184,92,56,0.4); color: var(--accent);
+      font-family: inherit; font-size: 11px; font-weight: 600;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 10px 16px; border-radius: 2px; cursor: pointer; transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .add-topic-btn:hover { background: rgba(184,92,56,0.15); border-color: var(--accent); }
 
     /* ─── SURVEY ─── */
-    .survey-section {
-      background: var(--white);
-      border-top: 1px solid var(--border);
-    }
-    .survey-wrap {
-      max-width: 620px;
-    }
+    .survey-section { background: var(--white); border-top: 1px solid var(--border); }
+    .survey-wrap { max-width: 620px; }
     .survey-section .section-desc { margin-bottom: 40px; }
-
-    /* Chat */
-    .chat {
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      overflow: hidden;
-      background: var(--white);
-    }
-    .chat-progress {
-      height: 2px;
-      background: var(--cream-dark);
-    }
-    .chat-progress-fill {
-      height: 2px;
-      background: var(--accent);
-      width: 0%;
-      transition: width 0.5s ease;
-    }
+    .chat { border: 1px solid var(--border); border-radius: 4px; overflow: hidden; background: var(--white); }
+    .chat-progress { height: 2px; background: var(--cream-dark); }
+    .chat-progress-fill { height: 2px; background: var(--accent); width: 0%; transition: width 0.5s ease; }
     .chat-msgs {
-      padding: 32px 28px;
-      min-height: 320px;
-      max-height: 440px;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
+      padding: 32px 28px; min-height: 320px; max-height: 480px;
+      overflow-y: auto; display: flex; flex-direction: column; gap: 20px;
     }
-    .msg {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      animation: rise 0.3s ease;
-    }
-    @keyframes rise {
-      from { opacity: 0; transform: translateY(8px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
+    .msg { display: flex; flex-direction: column; gap: 4px; animation: rise 0.3s ease; }
+    @keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
     .msg.user { align-items: flex-end; }
-    .msg-label {
-      font-size: 10px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      font-weight: 600;
-      color: var(--mid);
-      opacity: 0.6;
-    }
+    .msg-label { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; color: var(--mid); opacity: 0.6; }
     .msg.user .msg-label { color: var(--accent); }
-    .msg-text {
-      font-size: 14px;
-      line-height: 1.7;
-      color: var(--ink);
-      max-width: 88%;
-      white-space: pre-line;
-    }
-    .msg.bot .msg-text {
-      padding-left: 14px;
-      border-left: 2px solid var(--accent);
-      font-style: italic;
-    }
-    .msg.user .msg-text {
-      background: var(--accent-pale);
-      padding: 10px 14px;
-      border-radius: 2px;
-      font-style: normal;
-    }
-
-    /* typing indicator */
-    .typing {
-      display: none;
-      align-items: center;
-      gap: 4px;
-      padding-left: 14px;
-    }
+    .msg-text { font-size: 14px; line-height: 1.7; color: var(--ink); max-width: 88%; white-space: pre-line; }
+    .msg.bot .msg-text { padding-left: 14px; border-left: 2px solid var(--accent); font-style: italic; }
+    .msg.user .msg-text { background: var(--accent-pale); padding: 10px 14px; border-radius: 2px; font-style: normal; }
+    .typing { display: none; align-items: center; gap: 4px; padding-left: 14px; }
     .typing.visible { display: flex; }
-    .typing-dot {
-      width: 5px; height: 5px;
-      background: var(--border);
-      border-radius: 50%;
-      animation: blink 1.2s infinite;
-    }
+    .typing-dot { width: 5px; height: 5px; background: var(--border); border-radius: 50%; animation: blink 1.2s infinite; }
     .typing-dot:nth-child(2) { animation-delay: 0.2s; }
     .typing-dot:nth-child(3) { animation-delay: 0.4s; }
     @keyframes blink { 0%,80%,100%{opacity:0.3} 40%{opacity:1} }
-
-    /* input row */
     .chat-input-row {
-      border-top: 1px solid var(--border);
-      display: flex;
-      align-items: flex-end;
-      gap: 0;
+      border-top: 1px solid var(--border); display: flex; align-items: flex-end;
       background: var(--cream);
     }
     .chat-textarea {
-      flex: 1;
-      border: none;
-      background: transparent;
-      padding: 16px 20px;
-      font-size: 14px;
-      font-family: inherit;
-      color: var(--ink);
-      resize: none;
-      outline: none;
-      min-height: 52px;
-      max-height: 120px;
-      line-height: 1.5;
+      flex: 1; border: none; background: transparent; padding: 16px 20px;
+      font-size: 14px; font-family: inherit; color: var(--ink);
+      resize: none; outline: none; min-height: 52px; max-height: 120px; line-height: 1.5;
     }
     .chat-textarea::placeholder { color: var(--border); }
     .chat-send-btn {
-      width: 52px;
-      height: 52px;
-      background: none;
-      border: none;
-      border-left: 1px solid var(--border);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--mid);
-      transition: all 0.15s;
-      flex-shrink: 0;
+      width: 52px; height: 52px; background: none; border: none;
+      border-left: 1px solid var(--border); cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--mid); transition: all 0.15s; flex-shrink: 0;
     }
     .chat-send-btn:hover:not(:disabled) { background: var(--accent); color: white; }
     .chat-send-btn:disabled { color: var(--border); cursor: default; }
     .chat-send-btn svg { width: 16px; height: 16px; fill: currentColor; }
 
+    /* Draft restore banner */
+    .draft-banner {
+      display: none; background: var(--accent-pale); border: 1px solid rgba(184,92,56,0.3);
+      border-radius: 3px; padding: 14px 18px; margin-bottom: 16px;
+      font-size: 13px; color: var(--ink); display: flex;
+      align-items: center; justify-content: space-between; gap: 12px;
+    }
+    .draft-banner.show { display: flex; }
+    .draft-btn { font-family: inherit; font-size: 11px; font-weight: 600; letter-spacing: 0.05em; padding: 6px 12px; border-radius: 2px; cursor: pointer; border: none; }
+    .draft-btn-restore { background: var(--accent); color: white; }
+    .draft-btn-discard { background: none; color: var(--mid); border: 1px solid var(--border) !important; }
+
     /* ─── COMPLETION ─── */
-    #completion {
-      display: none;
-      margin-top: 40px;
-    }
+    #completion { display: none; margin-top: 40px; }
     #completion.show { display: block; }
-    .completion-title {
-      font-family: 'DM Serif Display', serif;
-      font-size: 28px;
-      font-weight: 400;
-      letter-spacing: -0.01em;
-      margin-bottom: 6px;
-    }
-    .completion-sub {
-      font-size: 14px;
-      color: var(--mid);
-      margin-bottom: 36px;
-      line-height: 1.6;
-    }
+    .completion-title { font-family: 'DM Serif Display', serif; font-size: 28px; font-weight: 400; letter-spacing: -0.01em; margin-bottom: 6px; }
+    .completion-sub { font-size: 14px; color: var(--mid); margin-bottom: 36px; line-height: 1.6; }
     .comp-section-label {
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--mid);
-      margin-bottom: 16px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid var(--border);
+      font-size: 10px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--mid); margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid var(--border);
     }
-    .connections {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      margin-bottom: 40px;
-    }
-    .conn-card {
-      border: 1px solid var(--border);
-      padding: 18px;
-      border-radius: 3px;
-      transition: border-color 0.15s;
-    }
+    .connections { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 40px; }
+    .conn-card { border: 1px solid var(--border); padding: 18px; border-radius: 3px; transition: border-color 0.15s; }
     .conn-card:hover { border-color: var(--accent); }
     .conn-top { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
     .conn-av { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: white; flex-shrink: 0; }
     .conn-name { font-family: 'DM Serif Display', serif; font-size: 15px; line-height: 1.2; }
     .conn-org { font-size: 11px; color: var(--mid); margin-top: 1px; }
     .conn-reason { font-size: 12px; color: var(--mid); line-height: 1.6; font-style: italic; }
-
-    .responses-box {
-      border: 1px solid var(--border);
-      border-radius: 3px;
-      overflow: hidden;
-      margin-bottom: 24px;
-    }
-    .resp-item {
-      padding: 16px 20px;
-      border-bottom: 1px solid var(--border);
-    }
+    .responses-box { border: 1px solid var(--border); border-radius: 3px; overflow: hidden; margin-bottom: 24px; }
+    .resp-item { padding: 16px 20px; border-bottom: 1px solid var(--border); position: relative; }
     .resp-item:last-child { border-bottom: none; }
-    .resp-q {
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--mid);
-      margin-bottom: 5px;
-    }
+    .resp-q { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mid); margin-bottom: 5px; }
     .resp-a { font-size: 13px; color: var(--ink); line-height: 1.65; }
-    .submit-row { display: flex; gap: 10px; flex-wrap: wrap; }
-    .btn {
-      font-family: inherit;
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      padding: 11px 22px;
-      border-radius: 3px;
-      cursor: pointer;
-      transition: all 0.15s;
-      border: none;
+    .resp-edit-btn {
+      position: absolute; top: 12px; right: 14px;
+      font-family: inherit; font-size: 10px; font-weight: 600;
+      letter-spacing: 0.06em; text-transform: uppercase; color: var(--mid);
+      background: none; border: 1px solid var(--border); padding: 3px 10px;
+      border-radius: 2px; cursor: pointer; transition: all 0.15s;
     }
+    .resp-edit-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .resp-edit-area { display: none; margin-top: 8px; }
+    .resp-edit-area.open { display: block; }
+    .resp-edit-textarea {
+      width: 100%; font-family: inherit; font-size: 13px; color: var(--ink);
+      border: 1px solid var(--border); border-radius: 2px; padding: 10px 12px;
+      line-height: 1.6; resize: vertical; outline: none; background: var(--cream);
+    }
+    .resp-edit-textarea:focus { border-color: var(--accent); }
+    .resp-save-btn {
+      margin-top: 6px; font-family: inherit; font-size: 11px; font-weight: 600;
+      letter-spacing: 0.05em; text-transform: uppercase; background: var(--accent);
+      color: white; border: none; padding: 6px 14px; border-radius: 2px; cursor: pointer;
+    }
+    .submit-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 40px; }
+    .btn { font-family: inherit; font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; padding: 11px 22px; border-radius: 3px; cursor: pointer; transition: all 0.15s; border: none; }
     .btn-dark { background: var(--ink); color: var(--white); }
     .btn-dark:hover { background: var(--accent); }
-    .btn-outline { background: transparent; color: var(--mid); border: 1px solid var(--border); }
-    .btn-outline:hover { border-color: var(--ink); color: var(--ink); }
+    .btn-outline { background: transparent; color: var(--mid); border: 1px solid var(--border) !important; }
+    .btn-outline:hover { border-color: var(--ink) !important; color: var(--ink); }
+
+    /* Claim profile */
+    .claim-section { border-top: 1px solid var(--border); padding-top: 32px; margin-top: 8px; }
+    .claim-desc { font-size: 13px; color: var(--mid); line-height: 1.7; margin-bottom: 16px; }
+    .claim-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+    .claim-select {
+      flex: 1; min-width: 200px; font-family: inherit; font-size: 13px; color: var(--ink);
+      border: 1px solid var(--border); border-radius: 3px; padding: 10px 14px;
+      background: var(--cream); outline: none; cursor: pointer;
+    }
+    .claim-select:focus { border-color: var(--accent); }
+    .claim-confirmed {
+      display: none; font-size: 13px; color: var(--accent);
+      font-style: italic; padding: 10px 0;
+    }
+    .claim-confirmed.show { display: block; }
 
     /* ─── FOOTER ─── */
     footer {
-      background: var(--black);
-      padding: 48px 40px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 16px;
+      background: var(--black); padding: 48px 40px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 16px;
     }
-    .footer-left {
-      font-size: 12px;
-      color: rgba(255,255,255,0.25);
-    }
+    .footer-left { font-size: 12px; color: rgba(255,255,255,0.25); }
     .footer-left strong { color: rgba(255,255,255,0.5); font-weight: 500; }
     .footer-right { font-size: 12px; }
     .footer-right a { color: rgba(255,255,255,0.3); text-decoration: none; }
@@ -656,16 +517,15 @@
     /* ─── RESPONSIVE ─── */
     @media (max-width: 720px) {
       nav { padding: 0 20px; }
+      .nav-links { display: none; }
       .hero { padding: 120px 24px 72px; }
       .section { padding: 56px 24px; }
       .pull-quote-section { padding: 56px 24px; }
-      .themes-grid { grid-template-columns: 1fr; }
-      .theme-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.07); padding: 28px 0; }
-      .theme-item + .theme-item { padding-left: 0; }
-      .theme-item:last-child { border-bottom: none; }
+      .chapter-header { grid-template-columns: 1fr; gap: 20px; }
       .connections { grid-template-columns: 1fr; }
       .hero-sep { display: none; }
       footer { flex-direction: column; }
+      .step-item { grid-template-columns: 40px 1fr; gap: 0 16px; }
     }
   </style>
 </head>
@@ -675,7 +535,13 @@
 <nav>
   <div class="nav-mark">
     <div class="nav-mark-dot"></div>
-    Pediatric Healthcare Ecosystem
+    Bright Minds
+  </div>
+  <div class="nav-links">
+    <a class="nav-link" href="#expect">How it works</a>
+    <a class="nav-link" href="#survey">Your perspective</a>
+    <a class="nav-link" href="#themes">Topics</a>
+    <a class="nav-link" href="#room">The Room</a>
   </div>
   <a class="nav-cta" href="#survey">Share Your Perspective →</a>
 </nav>
@@ -685,10 +551,10 @@
   <div class="hero-meta">Invitation-Only · July 15, 2026</div>
   <div class="hero-rule"></div>
   <h1>
-    Pediatric Healthcare<br>
-    <em>Innovation Ecosystem</em>
+    Bright Minds:<br>
+    <em>Bioscience &amp; Medtech Innovation</em>
   </h1>
-  <p class="hero-sub">A curated gathering of clinicians, founders, funders, and ecosystem builders — to reframe the hardest problems in pediatric healthcare translation.</p>
+  <p class="hero-sub">A curated gathering of clinicians, founders, funders, and ecosystem builders aimed at reframing and collaborating on the hardest problems in health translation.</p>
   <div class="hero-details">
     <div class="hero-detail">
       <div class="hero-detail-label">Date</div>
@@ -721,17 +587,202 @@
 <div class="pull-quote-section">
   <div class="pull-quote-inner">
     <span class="pull-quote-mark">"</span>
-    <p class="pull-quote-text">Too many brilliant teams are working on the right things and still not getting them to the children who need them. We want to name the friction honestly, reframe it smartly, and find where we can actually move.</p>
+    <p class="pull-quote-text">Too many brilliant teams are working on the right things and still not getting them to the patients who need them. We want to name the frictions honestly, reframe them systemically and initiate meaningful progress collectively.</p>
     <p class="pull-quote-attr">— Nadine Afari &amp; Rami</p>
   </div>
 </div>
 
-<!-- ─── PROFILES ─── -->
+<!-- ─── WHAT TO EXPECT ─── -->
+<section class="section expect-section" id="expect">
+  <div class="section-inner">
+    <div class="section-eyebrow">Before July 15</div>
+    <div class="section-title">What to Expect</div>
+    <p class="expect-intro">
+      We won't solve healthcare in an hour — but with your help, we can get the conversation moving in the right direction.
+      <strong> To do that, we won't be doing introductions on the call.</strong> Instead, there are three things to do here beforehand.
+    </p>
+    <div class="steps-list">
+      <div class="step-item">
+        <div class="step-num">01</div>
+        <div class="step-body">
+          <div class="step-title">Answer a few short questions</div>
+          <p class="step-desc">So we can structure the discussion around what actually matters and get you talking to the right people. Your answers shape the session design — the more honest, the more useful.</p>
+          <a class="step-link" href="#survey">Go to your questions →</a>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">02</div>
+        <div class="step-body">
+          <div class="step-title">Read through the topics — upvote, downvote, add your own</div>
+          <p class="step-desc">We've proposed a set of discussion topics across three lenses. Mark what resonates, push back on what doesn't, and add anything we've left off. The topics with the most signal shape the agenda.</p>
+          <a class="step-link" href="#themes">See the topics →</a>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">03</div>
+        <div class="step-body">
+          <div class="step-title">Get to know who's in the room</div>
+          <p class="step-desc">You can see short bios of everyone invited below. Once others complete Step 1, their introductions will appear here in their own words — so come back before July 15 to get to know your peers and what they're looking for from this gathering.</p>
+          <a class="step-link" href="#room">See The Room →</a>
+          <p class="step-note">Introductions populate as people complete Step 1.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SURVEY ─── -->
+<section class="section survey-section" id="survey">
+  <div class="section-inner">
+    <div class="survey-wrap">
+      <div class="section-eyebrow">Step 1</div>
+      <div class="section-title">Share Your Perspective</div>
+      <p class="section-desc">Six questions, about seven minutes. Your answers shape how we design the session and who you'll connect with.</p>
+
+      <div class="draft-banner" id="draft-banner">
+        <span>You have a saved draft — want to pick up where you left off?</span>
+        <div style="display:flex;gap:8px;flex-shrink:0">
+          <button class="draft-btn draft-btn-restore" id="draft-restore">Continue</button>
+          <button class="draft-btn draft-btn-discard" id="draft-discard" style="border:1px solid var(--border)">Start fresh</button>
+        </div>
+      </div>
+
+      <div class="chat" id="chat-widget">
+        <div class="chat-progress">
+          <div class="chat-progress-fill" id="prog-fill"></div>
+        </div>
+        <div class="chat-msgs" id="chat-msgs"></div>
+        <div class="chat-input-row">
+          <textarea class="chat-textarea" id="chat-input" placeholder="Type and press Enter to send…" rows="1" disabled></textarea>
+          <button class="chat-send-btn" id="send-btn" disabled>
+            <svg viewBox="0 0 24 24"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Completion -->
+      <div id="completion">
+        <div class="completion-title" id="comp-title">Thank you.</div>
+        <p class="completion-sub" id="comp-sub">Here's a summary of your perspective — and a few people worth connecting with on July 15. You can edit any answer before submitting.</p>
+
+        <div class="comp-section-label">Possible connections for you</div>
+        <div class="connections" id="connections"></div>
+
+        <div class="comp-section-label">Your responses <span style="font-weight:400;letter-spacing:0;text-transform:none;font-size:11px;color:var(--border)">— click any answer to edit</span></div>
+        <div class="responses-box" id="resp-box"></div>
+
+        <div class="submit-row">
+          <button class="btn btn-dark" id="email-btn">Send to Organizers</button>
+          <button class="btn btn-outline" id="copy-btn">Copy to Clipboard</button>
+        </div>
+
+        <!-- Claim profile -->
+        <div class="claim-section">
+          <div class="comp-section-label">Link to your profile in The Room</div>
+          <p class="claim-desc">Select your name below. Your introduction will appear in The Room so others can read it in your own words before the call — no prep call needed.</p>
+          <div class="claim-row">
+            <select class="claim-select" id="profile-select">
+              <option value="">— Select your name —</option>
+            </select>
+            <button class="btn btn-dark" id="claim-btn">Link Profile</button>
+          </div>
+          <p class="claim-confirmed" id="claim-confirmed">✓ Your responses are now visible in The Room under your profile.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── THREE LENSES ─── -->
+<section class="section themes-section" id="themes">
+  <div class="section-inner">
+    <div class="section-eyebrow">Step 2 · Three Lenses</div>
+    <div class="section-title">What We're Really Here to Work On</div>
+    <p class="section-desc">These aren't fixed tracks — they're starting frames. Upvote what resonates, downvote what doesn't, comment on any topic, and add what we've missed.</p>
+
+    <!-- Chapter 01 -->
+    <div class="chapter-block">
+      <div class="chapter-header">
+        <div class="chapter-left">
+          <div class="chapter-num">Chapter 01</div>
+          <div class="chapter-name">The Translation Gap</div>
+          <p class="chapter-desc">Brilliant science is dying between bench and bedside. Who owns the handoff — and what would it take to fund the crossing differently?</p>
+        </div>
+        <div class="chapter-right">
+          <p class="chapter-tension">"We can generate the evidence. We just can't afford to generate it fast enough."</p>
+        </div>
+      </div>
+      <div class="topics-header">
+        <span class="topics-label">Discussion Topics</span>
+      </div>
+      <div class="topics-list" id="topics-ch01"></div>
+      <div class="add-topic-row">
+        <input class="add-topic-input" id="add-ch01" placeholder="Suggest a topic for this chapter…">
+        <button class="add-topic-btn" onclick="addUserTopic('ch01')">Add topic</button>
+      </div>
+    </div>
+
+    <!-- Chapter 02 -->
+    <div class="chapter-block">
+      <div class="chapter-header">
+        <div class="chapter-left">
+          <div class="chapter-num">Chapter 02</div>
+          <div class="chapter-name">Capital &amp; Commercialization</div>
+          <p class="chapter-desc">Money exists but is misaligned. Investors, payers, and health systems each have a different definition of "ready." What does closing that gap look like?</p>
+        </div>
+        <div class="chapter-right">
+          <p class="chapter-tension">"We're not struggling to find great science. We're struggling to get it funded at the right moment."</p>
+        </div>
+      </div>
+      <div class="topics-header">
+        <span class="topics-label">Discussion Topics</span>
+      </div>
+      <div class="topics-list" id="topics-ch02"></div>
+      <div class="add-topic-row">
+        <input class="add-topic-input" id="add-ch02" placeholder="Suggest a topic for this chapter…">
+        <button class="add-topic-btn" onclick="addUserTopic('ch02')">Add topic</button>
+      </div>
+    </div>
+
+    <!-- Chapter 03 -->
+    <div class="chapter-block">
+      <div class="chapter-header">
+        <div class="chapter-left">
+          <div class="chapter-num">Chapter 03</div>
+          <div class="chapter-name">Ecosystem Architecture</div>
+          <p class="chapter-desc">Platforms and programs keep getting built. Founders keep not using them. What does a hub that actually works look like — and who has to run it?</p>
+        </div>
+        <div class="chapter-right">
+          <p class="chapter-tension">"We can't keep building digital bulletin boards and calling it infrastructure."</p>
+        </div>
+      </div>
+      <div class="topics-header">
+        <span class="topics-label">Discussion Topics</span>
+      </div>
+      <div class="topics-list" id="topics-ch03"></div>
+      <div class="add-topic-row">
+        <input class="add-topic-input" id="add-ch03" placeholder="Suggest a topic for this chapter…">
+        <button class="add-topic-btn" onclick="addUserTopic('ch03')">Add topic</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── THE ROOM ─── -->
 <section class="section profiles-section" id="room">
   <div class="section-inner">
-    <div class="section-eyebrow">The Room</div>
+    <div class="section-eyebrow">Step 3 · The Room</div>
     <div class="section-title">Who You'll Be In Conversation With</div>
-    <p class="section-desc">Thirteen people. Click any name to read more.</p>
+    <p class="section-desc">Fifteen people. Click any name to read more. Complete Step 1 and link your profile — your introduction will appear here for everyone else.</p>
+
+    <div class="cluster-block">
+      <div class="cluster-header">
+        <span class="cluster-num">Hosts</span>
+        <span class="cluster-name">Your Organizers</span>
+      </div>
+      <div id="cluster-host"></div>
+    </div>
 
     <div class="cluster-block">
       <div class="cluster-header">
@@ -759,82 +810,6 @@
   </div>
 </section>
 
-<!-- ─── THEMES ─── -->
-<section class="section themes-section" id="themes">
-  <div class="section-inner">
-    <div class="section-eyebrow">Three Lenses</div>
-    <div class="section-title">What We're Really Here to Work On</div>
-    <p class="section-desc">These aren't fixed tracks — they're starting frames. The goal is to reframe at least one before we're done.</p>
-    <div class="themes-grid">
-      <div class="theme-item">
-        <div class="theme-num">Chapter 01</div>
-        <div class="theme-name">The Translation Gap</div>
-        <p class="theme-desc">Brilliant science is dying between bench and bedside. Who owns the handoff — and what would it take to fund the crossing differently?</p>
-        <p class="theme-tension">"We can generate the evidence. We just can't afford to generate it fast enough."</p>
-      </div>
-      <div class="theme-item">
-        <div class="theme-num">Chapter 02</div>
-        <div class="theme-name">Capital &amp; Commercialization</div>
-        <p class="theme-desc">Money exists but is misaligned. Investors, payers, and health systems each have a different definition of "ready." What does closing that gap look like?</p>
-        <p class="theme-tension">"We're not struggling to find great science. We're struggling to get it funded at the right moment."</p>
-      </div>
-      <div class="theme-item">
-        <div class="theme-num">Chapter 03</div>
-        <div class="theme-name">Ecosystem Architecture</div>
-        <p class="theme-desc">Platforms and programs keep getting built. Founders keep not using them. What does a hub that actually works look like — and who has to run it?</p>
-        <p class="theme-tension">"We can't keep building digital bulletin boards and calling it infrastructure."</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ─── SURVEY ─── -->
-<section class="section survey-section" id="survey">
-  <div class="section-inner">
-    <div class="survey-wrap">
-      <div class="section-eyebrow">Before July 15</div>
-      <div class="section-title">Share Your Perspective</div>
-      <p class="section-desc">Five questions, about five minutes. Your responses shape how we design the session — so we spend the hour on insight, not introductions.</p>
-
-      <div class="chat" id="chat-widget">
-        <div class="chat-progress">
-          <div class="chat-progress-fill" id="prog-fill"></div>
-        </div>
-        <div class="chat-msgs" id="chat-msgs"></div>
-        <div class="chat-input-row">
-          <textarea
-            class="chat-textarea"
-            id="chat-input"
-            placeholder="Type and press Enter to send…"
-            rows="1"
-            disabled
-          ></textarea>
-          <button class="chat-send-btn" id="send-btn" disabled>
-            <svg viewBox="0 0 24 24"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg>
-          </button>
-        </div>
-      </div>
-
-      <!-- Completion -->
-      <div id="completion">
-        <div class="completion-title" id="comp-title">Thank you.</div>
-        <p class="completion-sub">Here's a summary of your perspective and a few people worth connecting with on July 15.</p>
-
-        <div class="comp-section-label">Possible connections for you</div>
-        <div class="connections" id="connections"></div>
-
-        <div class="comp-section-label">Your responses</div>
-        <div class="responses-box" id="resp-box"></div>
-
-        <div class="submit-row">
-          <button class="btn btn-dark" id="email-btn">Email to Organizers</button>
-          <button class="btn btn-outline" id="copy-btn">Copy to Clipboard</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- ─── FOOTER ─── -->
 <footer>
   <div class="footer-left">
@@ -847,130 +822,264 @@
 </footer>
 
 <script>
-// ─── DATA ──────────────────────────────────────────────────────────────────────
-const FORMSPREE_ENDPOINT = 'https://formspree.io/f/YOUR_FORM_ID'; // ← swap in your Formspree ID
+// ─── CONFIG ───────────────────────────────────────────────────────────────────
+const FORMSPREE_ENDPOINT = 'https://formspree.io/f/YOUR_FORM_ID';
 
+// ─── PARTICIPANTS ─────────────────────────────────────────────────────────────
 const participants = [
   {
+    name:"Nadine Afari", org:"Together.Health · UC Irvine · Rady Children's", role:"Co-Host",
+    i:"NA", c:"#B85C38", cluster:"host",
+    tags:["Pediatric Healthcare","Ecosystem Design","Health Translation"],
+    kw:["children","pediatric","health","innovation","rady","together","ecosystem","translation","clinical"],
+    bio:"Co-founder & Managing Director of Together.Health, Adjunct Faculty at UC Irvine, and Board Member of the Rady Children's Innovation Fund. A decade of work at the intersection of clinical care, health innovation, and ecosystem building. The architect of this gathering — and the person who won't let us leave without a reframe."
+  },
+  {
+    name:"Rami", org:"The Garage", role:"Co-Host",
+    i:"RA", c:"#555048", cluster:"host",
+    tags:["Innovation Ecosystems","Venture Building","Community Design"],
+    kw:["startup","innovation","venture","ecosystem","build","community","founder"],
+    bio:"Building The Garage as a platform for bringing together innovators, founders, and institutions to tackle hard problems worth solving. Co-host of this gathering and focused on making the hour count."
+  },
+  {
     name:"Rachel Dixon", org:"New Frontiers Health", role:"Founder",
-    i:"RD", c:"#2B7A8A",
+    i:"RD", c:"#2B7A8A", cluster:"b",
     tags:["Medicaid Strategy","Health Equity","Digital Health"],
     kw:["medicaid","reimbursement","payer","equity","telehealth","underserved","coverage","access","insurance","managed care"],
-    bio:"Expert in Medicaid reimbursement strategy and digital health implementation for underserved populations. Former Together.Health collaborator. Coaches health tech companies on payer alignment, product-market fit, and Medicaid revenue.",
-    cluster:"b"
+    bio:"Expert in Medicaid reimbursement strategy and digital health implementation for underserved populations. Former Together.Health collaborator. Coaches health tech companies on payer alignment, product-market fit, and Medicaid revenue."
   },
   {
     name:"Greg Zapotoczny, PhD", org:"CTIP · Lurie Children's Hospital", role:"Medical Device Trials Director",
-    i:"GZ", c:"#3D6B8E",
+    i:"GZ", c:"#3D6B8E", cluster:"a",
     tags:["Pediatric Device Trials","FDA / Regulatory","Trial Infrastructure"],
     kw:["clinical trial","device","pediatric","regulatory","fda","trial design","children","medical device","irb","protocol"],
-    bio:"Building pediatric medical device trial infrastructure at Northwestern / Lurie Children's. PhD in genetics & molecular biology (UNC Chapel Hill). Background in cancer drug development and regulatory science at USC Ellison Institute.",
-    cluster:"a"
+    bio:"Building pediatric medical device trial infrastructure at Northwestern / Lurie Children's. PhD in genetics & molecular biology (UNC Chapel Hill). Background in cancer drug development and regulatory science at USC Ellison Institute."
   },
   {
     name:"Larissa May, MD", org:"UC Davis · formerly ARPA-H", role:"Emergency Physician & Innovation Advisor",
-    i:"LM", c:"#6B4F8E",
+    i:"LM", c:"#6B4F8E", cluster:"a",
     tags:["Rapid Diagnostics","ARPA-H","Translational Research"],
     kw:["diagnostic","emergency","rapid test","point of care","infectious disease","arpa","federal","antibiotic","sepsis","assay"],
-    bio:"Board-certified emergency physician, 100+ peer-reviewed publications. Former ARPA-H program manager — her contract was recently cut but she's continuing the work. Advises life science companies through UC Davis Center for Diagnostic Innovation and Berkeley SkyDeck.",
-    cluster:"a"
+    bio:"Board-certified emergency physician, 100+ peer-reviewed publications. Former ARPA-H program manager. Advises life science companies through UC Davis Center for Diagnostic Innovation and Berkeley SkyDeck."
   },
   {
     name:"Lois Sayrs, PhD", org:"Phoenix Children's Hospital", role:"Senior Clinical Research Scientist",
-    i:"LS", c:"#2B7A5A",
+    i:"LS", c:"#2B7A5A", cluster:"a",
     tags:["Biostatistics","Pediatric Research","Trial Design"],
     kw:["biostatistics","research design","trial","methodology","outcomes","statistical","study design","data","evidence","measurement"],
-    bio:"30+ year specialist in applied research design and biostatistics. Former Director of Research/Biostatistics at CHOC Research Institute. Expert at FDA approval studies, clinical trial design, and pediatric healthcare outcomes measurement.",
-    cluster:"a"
+    bio:"30+ year specialist in applied research design and biostatistics. Former Director of Research/Biostatistics at CHOC Research Institute. Expert at FDA approval studies, clinical trial design, and pediatric outcomes measurement."
   },
   {
     name:"Gunjan Siroya", org:"Larta Institute", role:"Chief Solutions Officer",
-    i:"GS", c:"#8E6120",
+    i:"GS", c:"#8E6120", cluster:"b",
     tags:["SBIR / STTR","Tech Commercialization","Federal Programs"],
     kw:["sbir","sttr","commercialization","federal funding","grant","nih","nsf","darpa","doe","tech transfer","licensing"],
-    bio:"10+ years leading commercialization programs on behalf of federal agencies including NIH, NSF, DARPA, DOE, and NOAA. Expert navigator of the federal funding-to-market pipeline at a time when that pipeline is under enormous pressure.",
-    cluster:"b"
+    bio:"10+ years leading commercialization programs on behalf of federal agencies including NIH, NSF, DARPA, DOE, and NOAA. Expert navigator of the federal funding-to-market pipeline."
   },
   {
     name:"Helen McBride, PhD", org:"Bold Capital Partners", role:"Partner",
-    i:"HM", c:"#8E3D5B",
+    i:"HM", c:"#8E3D5B", cluster:"b",
     tags:["Life Sciences Investment","Tech-Bio","Healthspan"],
     kw:["investment","investor","capital","fund","venture","life sciences","biotech","healthspan","longevity","board","fundraising"],
-    bio:"Invests at the intersection of technology and life sciences. Former Amgen (13 years), Caltech postdoc. Contributed to $4B+ in commercial products. Serves on multiple biotech and medical device boards. President, LA Healthcare Businesswomen's Association.",
-    cluster:"b"
+    bio:"Invests at the intersection of technology and life sciences. Former Amgen (13 years), Caltech postdoc. Contributed to $4B+ in commercial products. Serves on multiple biotech and medical device boards. President, LA Healthcare Businesswomen's Association."
   },
   {
     name:"Karin Koch", org:"Independent · formerly ULP", role:"Innovation Ecosystem Advisor",
-    i:"KK", c:"#7A5E20",
+    i:"KK", c:"#7A5E20", cluster:"c",
     tags:["Ecosystem Building","Life Science Incubation","OC Biotech"],
     kw:["ecosystem","incubator","accelerator","startup","hub","community","irvine","orange county","founder","wet lab","infrastructure"],
-    bio:"Built University Lab Partners from launch to 68+ startups collectively raising $500M+. Now advises ecosystems globally on building founder economies. One of the rare people who knows what makes a hub actually work vs. become a ghost town.",
-    cluster:"c"
+    bio:"Built University Lab Partners from launch to 68+ startups collectively raising $500M+. Now advises ecosystems globally on building founder economies. One of the rare people who knows what makes a hub actually work."
   },
   {
     name:"Amir Rahimi, PhD", org:"SoCal PAMA", role:"Physician",
-    i:"AR", c:"#555048",
+    i:"AR", c:"#555048", cluster:"a",
     tags:["Clinical Medicine"],
     kw:["physician","medical","clinical","patient"],
-    bio:"Southern California–based physician affiliated with the SoCal Persian American Medical Association.",
-    cluster:"a"
+    bio:"Southern California–based physician affiliated with the SoCal Persian American Medical Association."
   },
   {
     name:"John Younger, MD", org:"University City Science Center", role:"VP Science & Technology",
-    i:"JY", c:"#2B5C8E",
+    i:"JY", c:"#2B5C8E", cluster:"a",
     tags:["Physician-Scientist Entrepreneur","Biotech Founding","Diagnostics"],
     kw:["founder","startup","physician scientist","entrepreneur","academic","spinout","diagnostics","sepsis","bench to bedside","nih"],
-    bio:"ER physician turned biotech founder (Akadeum Life Sciences). 20 years NIH-funded research at University of Michigan. Now VP Science & Technology at University City Science Center. Member, NIGMS National Advisory Council. Expert on the leap from NIH lab to commercial company.",
-    cluster:"a"
+    bio:"ER physician turned biotech founder (Akadeum Life Sciences). 20 years NIH-funded research at University of Michigan. Now VP Science & Technology at University City Science Center. Expert on the leap from NIH lab to commercial company."
   },
   {
     name:"Prashant Samant", org:"Akido Labs", role:"CEO & Co-founder",
-    i:"PS", c:"#1B7A50",
+    i:"PS", c:"#1B7A50", cluster:"c",
     tags:["Clinical AI at Scale","Health Equity","Digital Health"],
     kw:["ai","artificial intelligence","scale","preventive","equity","underserved","digital health","data","machine learning","population health","primary care"],
-    bio:"Founded Akido through USC's Digital Health Lab in 2015. Now leads one of the top health AI companies: 700+ staff, 240-physician network, hundreds of thousands of patients. EY Entrepreneur of the Year – Greater LA (2023).",
-    cluster:"c"
+    bio:"Founded Akido through USC's Digital Health Lab in 2015. Now leads one of the top health AI companies: 700+ staff, 240-physician network, hundreds of thousands of patients. EY Entrepreneur of the Year – Greater LA (2023)."
   },
   {
     name:"Rasu Shrestha, MD, MBA", org:"Advocate Health", role:"EVP & Chief Innovation Officer",
-    i:"RS", c:"#5B3D8E",
+    i:"RS", c:"#5B3D8E", cluster:"c",
     tags:["Health System Innovation","Commercialization","Strategic Investment"],
     kw:["health system","commercialization","innovation","strategy","ai","implementation","hospital","adoption","enterprise","investment","upmc","himss"],
-    bio:"Enterprise EVP & Chief Innovation and Commercialization Officer at Advocate Health — one of the US's largest nonprofit health systems. Built UPMC's innovation and venture capital engine. HIMSS board member. The voice of what health systems actually need before they'll adopt.",
-    cluster:"c"
+    bio:"Enterprise EVP & Chief Innovation and Commercialization Officer at Advocate Health. Built UPMC's innovation and venture capital engine. HIMSS board member. The voice of what health systems actually need before they'll adopt."
   },
   {
     name:"Frank Sawyer", org:"Renaissance Philanthropy", role:"Innovation Funder",
-    i:"FS", c:"#555048",
+    i:"FS", c:"#555048", cluster:"b",
     tags:["Transformational Philanthropy","Science Funding","Big Bets"],
     kw:["philanthropy","funding","grant","science","big bet","catalyst","foundation","transformation"],
-    bio:"Connected to Renaissance Philanthropy — an organization placing large, deliberate bets on extraordinary scientific progress. Bringing a funder's perspective on backing transformational work at a moment when traditional funding is under stress.",
-    cluster:"b"
+    bio:"Connected to Renaissance Philanthropy — an organization placing large, deliberate bets on extraordinary scientific progress. Bringing a funder's perspective on backing transformational work at a moment when traditional funding is under stress."
   },
   {
     name:"Stefany Y. Holguin, PhD", org:"GSA Presidential Innovation Fellow", role:"Biomedical Innovator",
-    i:"SH", c:"#7A3D8E",
+    i:"SH", c:"#7A3D8E", cluster:"a",
     tags:["Biomedical Innovation","Federal Programs","Underserved Populations"],
     kw:["federal","government","biomedical","drug delivery","materials","veteran","underserved","civic","georgia tech","translation","emerging technology"],
-    bio:"PhD from Georgia Tech (Materials Science & Engineering). Presidential Innovation Fellow working with the GSA and Veterans Affairs. 10+ years driving biomedical innovation including laser-mediated drug delivery. Bridges deep science and government program design.",
-    cluster:"a"
+    bio:"PhD from Georgia Tech (Materials Science & Engineering). Presidential Innovation Fellow working with the GSA and Veterans Affairs. 10+ years driving biomedical innovation including laser-mediated drug delivery. Bridges deep science and government program design."
   }
 ];
 
-// ─── RENDER PROFILES ───────────────────────────────────────────────────────────
+// ─── TOPICS DATA ──────────────────────────────────────────────────────────────
+const topicsData = {
+  ch01: [
+    { id:'hs1', text:'What emerging healthcare innovation and clinical research areas are currently underrecognized but could become high value within the next 5–10 years?', cat:'Horizon Scanning' },
+    { id:'hs2', text:'What signals or methods have proven most reliable for spotting emerging opportunities before they become obvious?', cat:'Horizon Scanning' },
+    { id:'hs3', text:'How should we structure a convening of top researchers across domains to surface underrecognized areas most effectively?', cat:'Horizon Scanning' },
+    { id:'tc1', text:'Where does translation from science to real-world products most often break down, and why?', cat:'Translational Capabilities' },
+    { id:'tc2', text:'What capabilities are still missing in the broader ecosystem to make translation faster and more reliable?', cat:'Translational Capabilities' }
+  ],
+  ch02: [
+    { id:'syn1', text:'Across all these areas, what is the single biggest unmet need in turning great science and research into great outcomes?', cat:'Synthesis' },
+    { id:'syn2', text:'If we could only build one capability first, which would create the most leverage — and why?', cat:'Synthesis' },
+    { id:'syn3', text:'What would success look like in 3–5 years if we got this right?', cat:'Synthesis' }
+  ],
+  ch03: [
+    { id:'tth1', text:'How should specialized talent be pooled and organized to maximize impact on high-priority projects?', cat:'Technical Talent Hubs' },
+    { id:'tth2', text:'What makes a technical talent hub successful versus one that struggles to deliver results?', cat:'Technical Talent Hubs' },
+    { id:'tth3', text:'What incentives or structures would attract top engineering talent to contribute to shared, high-priority initiatives?', cat:'Technical Talent Hubs' }
+  ]
+};
+
+// ─── TOPIC FUNCTIONS ──────────────────────────────────────────────────────────
+function getVoteState(id) { return localStorage.getItem('vote_' + id) || null; }
+function getComments(id) {
+  try { return JSON.parse(localStorage.getItem('comments_' + id) || '[]'); }
+  catch(e) { return []; }
+}
+function getUserTopics(ch) {
+  try { return JSON.parse(localStorage.getItem('utopics_' + ch) || '[]'); }
+  catch(e) { return []; }
+}
+
+function castVote(topicId, direction, btn) {
+  const current = getVoteState(topicId);
+  if (current === direction) {
+    localStorage.removeItem('vote_' + topicId);
+  } else {
+    localStorage.setItem('vote_' + topicId, direction);
+  }
+  renderTopics();
+}
+
+function saveComment(topicId, text) {
+  if (!text.trim()) return;
+  const comments = getComments(topicId);
+  comments.push(text.trim());
+  localStorage.setItem('comments_' + topicId, JSON.stringify(comments));
+  renderTopics();
+}
+
+function addUserTopic(ch) {
+  const input = document.getElementById('add-' + ch);
+  const text = input.value.trim();
+  if (!text) return;
+  const topics = getUserTopics(ch);
+  topics.push({ id: 'u_' + Date.now(), text, cat: 'Your Addition' });
+  localStorage.setItem('utopics_' + ch, JSON.stringify(topics));
+  input.value = '';
+  renderTopics();
+}
+
+function buildTopicItem(t) {
+  const voteState = getVoteState(t.id);
+  const comments = getComments(t.id);
+  const isUser = t.id.startsWith('u_');
+
+  const div = document.createElement('div');
+  div.className = 'topic-item' + (isUser ? ' user-topic-item' : '');
+  div.innerHTML = `
+    <div class="topic-main">
+      <div class="topic-text">${t.text}</div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0;padding-left:16px">
+        <span class="topic-cat">${t.cat}</span>
+        <div class="topic-actions">
+          <button class="vote-btn ${voteState === 'up' ? 'voted-up' : ''}" onclick="castVote('${t.id}','up',this)">
+            ↑ ${voteState === 'up' ? 'Relevant' : 'Relevant'}
+          </button>
+          <button class="vote-btn ${voteState === 'down' ? 'voted-down' : ''}" onclick="castVote('${t.id}','down',this)">
+            ↓
+          </button>
+          <button class="comment-toggle" onclick="toggleComments('${t.id}')">
+            ${comments.length > 0 ? comments.length + ' comment' + (comments.length !== 1 ? 's' : '') : 'Comment'}
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="topic-comments" id="tc_${t.id}">
+      ${comments.map(c => `<div class="comment-item">${c}</div>`).join('')}
+      <div class="comment-input-row">
+        <input class="comment-input" id="ci_${t.id}" placeholder="Add a comment…" onkeydown="if(event.key==='Enter'){saveComment('${t.id}',this.value);this.value='';}">
+        <button class="comment-submit" onclick="const i=document.getElementById('ci_${t.id}');saveComment('${t.id}',i.value);i.value=''">Add</button>
+      </div>
+    </div>
+  `;
+  return div;
+}
+
+function toggleComments(id) {
+  const el = document.getElementById('tc_' + id);
+  if (el) el.classList.toggle('open');
+}
+
+function renderTopics() {
+  ['ch01','ch02','ch03'].forEach(ch => {
+    const el = document.getElementById('topics-' + ch);
+    if (!el) return;
+    el.innerHTML = '';
+    const base = topicsData[ch] || [];
+    const user = getUserTopics(ch);
+    [...base, ...user].forEach(t => el.appendChild(buildTopicItem(t)));
+  });
+}
+
+// ─── RENDER PROFILES ─────────────────────────────────────────────────────────
+function getSavedSurvey(name) {
+  try { return JSON.parse(localStorage.getItem('profile_' + name) || 'null'); }
+  catch(e) { return null; }
+}
+
 function renderProfiles() {
-  ['a','b','c'].forEach(cl => {
+  ['host','a','b','c'].forEach(cl => {
     const el = document.getElementById('cluster-' + cl);
+    if (!el) return;
     participants.filter(p => p.cluster === cl).forEach(p => {
+      const saved = getSavedSurvey(p.name);
       const row = document.createElement('div');
       row.className = 'profile-row';
+
+      let surveyHtml = '';
+      if (saved) {
+        surveyHtml = `
+          <div class="p-survey-answers">
+            <div class="p-survey-label">In their own words</div>
+            ${saved.q6 ? `<p class="p-survey-intro">"${saved.q6}"</p>` : ''}
+            ${saved.q1 ? `<div class="p-answer-item"><div class="p-answer-q">Current work &amp; biggest friction</div><div class="p-answer-a">${saved.q1}</div></div>` : ''}
+            ${saved.q4 ? `<div class="p-answer-item"><div class="p-answer-q">What they want to walk away with</div><div class="p-answer-a">${saved.q4}</div></div>` : ''}
+          </div>`;
+      }
+
       row.innerHTML = `
         <div class="p-av" style="background:${p.c}">${p.i}</div>
         <div class="p-main">
           <div class="p-name">${p.name}</div>
           <div class="p-org">${p.org}${p.role ? ' · ' + p.role : ''}</div>
-          <div class="p-tags">${p.tags.map(t=>`<span class="p-tag">${t}</span>`).join('')}</div>
-          <div class="p-bio">${p.bio}</div>
+          <div class="p-tags">${p.tags.map(t=>`<span class="p-tag">${t}</span>`).join('')}${saved ? '<span class="p-tag" style="background:rgba(184,92,56,0.1);border-color:rgba(184,92,56,0.3);color:var(--accent)">Responded ✓</span>' : ''}</div>
+          <div class="p-bio">${p.bio}${surveyHtml}</div>
         </div>
         <div class="p-arrow">›</div>
       `;
@@ -984,43 +1093,49 @@ function renderProfiles() {
   });
 }
 
-// ─── SURVEY ────────────────────────────────────────────────────────────────────
+// ─── SURVEY ───────────────────────────────────────────────────────────────────
 const Qs = [
   {
     id:'name',
-    msg:"Welcome. We're gathering honest input from everyone in the room before July 15 — so we can design a session worth your hour.\n\nWhat's your name?",
+    msg:"Welcome. We're gathering honest input from everyone before July 15 — so we can design a session actually worth your hour.\n\nWhat's your name?",
     ph:"First name is fine",
-    ack:null
+    ack: null
   },
   {
     id:'q1',
-    msg: n => `Good to meet you, ${n}.\n\nWhat's the most meaningful work you're doing right now — and what's the single biggest thing slowing it down?\n\n(2–4 sentences. Honest friction is more useful than a polished answer.)`,
+    msg: n => `Good to meet you, ${n}.\n\nWhat's the most meaningful work you're doing right now — and what's the single biggest thing slowing it down?\n\n(Honest friction is more useful than a polished answer.)`,
     ph:"The work and the friction holding it back…",
     ack:"That's exactly the kind of context we need."
   },
   {
     id:'q2',
-    msg:"In pediatric or healthcare innovation broadly, what's a problem you think the field is asking the wrong way?",
+    msg:"What's a problem you think the field is asking the wrong way? What's wrong about how we're looking at it now?",
     ph:"The reframe that keeps nagging at you…",
     ack:"Really useful framing."
   },
   {
     id:'q3',
-    msg:"What do you bring to this group that might not be obvious from your title or bio?\n\nSkills, relationships, access, context — things that don't show up in a standard introduction.",
-    ph:"Hidden assets, networks, unusual capabilities…",
+    msg:"What do you bring to this group that might not be obvious from your title?\n\nHidden resources, relationships, and capabilities that don't show up on your standard bio.",
+    ph:"Skills, networks, unusual access or context…",
     ack:"That's genuinely valuable to know."
   },
   {
     id:'q4',
-    msg:"What would you love to walk away from July 15 with — a specific connection, an answer, a resource, or an idea?",
+    msg:"What's one thing you'd love to walk away from this conversation with — a connection, an answer, or an idea?",
     ph:"The more specific, the more useful…",
     ack:"Good. We'll do our best to make that happen."
   },
   {
     id:'q5',
-    msg:"Last one. Is there a project or challenge where you'd be open to real-time input from this group?",
-    ph:"Yes / No / Maybe — and a line or two if yes",
-    ack:null
+    msg:"Is there a project, challenge, or collaboration where you'd be open to real-time input from this group?\n\nYes / No / Maybe — and a line or two if yes.",
+    ph:"Yes / No / Maybe, and what it is…",
+    ack:"Noted."
+  },
+  {
+    id:'q6',
+    msg:"Last one. Give us a short introduction — a few sentences that capture who you are and what you care about.\n\nWe'll share these before the call so everyone shows up knowing something real about each other, and we can skip straight to the good stuff.",
+    ph:"In your own words, for the room…",
+    ack: null
   }
 ];
 
@@ -1029,7 +1144,8 @@ const qLabels = {
   q2:"A problem the field is asking wrong",
   q3:"What you bring that's not obvious",
   q4:"What you want to walk away with",
-  q5:"Open to group input on"
+  q5:"Open to group input on",
+  q6:"Introduction for the room"
 };
 
 let step = 0, uName = '', responses = {};
@@ -1057,9 +1173,14 @@ function showTyping() {
 }
 function hideTyping() { const t = document.getElementById('typing'); if(t) t.remove(); }
 
-function setProgress(done, total) {
-  progEl.style.width = (done / total * 100) + '%';
+function setProgress(done, total) { progEl.style.width = (done / total * 100) + '%'; }
+
+function saveDraft() {
+  if (step === 0) return;
+  localStorage.setItem('survey_draft', JSON.stringify({ step, responses, uName }));
 }
+
+function clearDraft() { localStorage.removeItem('survey_draft'); }
 
 function nextQ() {
   if (step >= Qs.length) { finalize(); return; }
@@ -1087,6 +1208,7 @@ function send() {
   inputEl.disabled = true; sendEl.disabled = true;
   step++;
   setProgress(step, Qs.length);
+  saveDraft();
   const ack = q.ack;
   if (ack && step < Qs.length) {
     showTyping();
@@ -1099,10 +1221,8 @@ function send() {
 // ─── MATCHING ─────────────────────────────────────────────────────────────────
 function matchParticipants() {
   const text = Object.entries(responses).filter(([k])=>k!=='name').map(([,v])=>v).join(' ').toLowerCase();
-  let scored = participants.map(p => ({ ...p, score: p.kw.filter(k => text.includes(k)).length }));
-  scored = scored.sort((a,b) => b.score - a.score);
-  // Deduplicate in case of ties — just take top 3
-  return scored.slice(0, 3);
+  let scored = participants.filter(p => p.cluster !== 'host').map(p => ({ ...p, score: p.kw.filter(k => text.includes(k)).length }));
+  return scored.sort((a,b) => b.score - a.score).slice(0, 3);
 }
 
 function matchReason(p) {
@@ -1112,13 +1232,13 @@ function matchReason(p) {
   return `Overlap on ${hit.charAt(0).toUpperCase() + hit.slice(1)}. ${p.tags[0]}.`;
 }
 
-// ─── FORMSPREE SUBMIT ─────────────────────────────────────────────────────────
+// ─── FORMSPREE ────────────────────────────────────────────────────────────────
 async function submitToFormspree() {
   if (!FORMSPREE_ENDPOINT.includes('YOUR_FORM_ID')) {
     try {
       await fetch(FORMSPREE_ENDPOINT, {
-        method: 'POST',
-        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+        method:'POST',
+        headers:{ 'Accept':'application/json','Content-Type':'application/json' },
         body: JSON.stringify({ name: responses.name, ...responses })
       });
     } catch(e) { console.warn('Formspree submission failed:', e); }
@@ -1130,10 +1250,10 @@ function finalize() {
   showTyping();
   setTimeout(() => {
     hideTyping();
-    addMsg(`That's everything, ${uName}. Scroll down to see your response summary and a few people worth connecting with on July 15.`, 'bot');
+    addMsg(`That's everything, ${uName}. Scroll down to see your responses and your suggested connections for July 15.`, 'bot');
     inputEl.disabled = true; sendEl.disabled = true;
     inputEl.placeholder = '—';
-
+    clearDraft();
     submitToFormspree();
 
     const comp = document.getElementById('completion');
@@ -1148,32 +1268,42 @@ function finalize() {
       d.innerHTML = `
         <div class="conn-top">
           <div class="conn-av" style="background:${p.c}">${p.i}</div>
-          <div>
-            <div class="conn-name">${p.name}</div>
-            <div class="conn-org">${p.org}</div>
-          </div>
+          <div><div class="conn-name">${p.name}</div><div class="conn-org">${p.org}</div></div>
         </div>
-        <div class="conn-reason">${matchReason(p)}</div>
-      `;
+        <div class="conn-reason">${matchReason(p)}</div>`;
       connEl.appendChild(d);
     });
 
-    // Responses
+    // Editable responses
     const respEl = document.getElementById('resp-box');
     Object.entries(responses).filter(([k])=>k!=='name').forEach(([k,v]) => {
       const d = document.createElement('div');
       d.className = 'resp-item';
-      d.innerHTML = `<div class="resp-q">${qLabels[k]||k}</div><div class="resp-a">${v}</div>`;
+      d.innerHTML = `
+        <div class="resp-q">${qLabels[k]||k}</div>
+        <div class="resp-a" id="ra_${k}">${v}</div>
+        <button class="resp-edit-btn" onclick="toggleEdit('${k}')">Edit</button>
+        <div class="resp-edit-area" id="rea_${k}">
+          <textarea class="resp-edit-textarea" id="ret_${k}" rows="3">${v}</textarea>
+          <button class="resp-save-btn" onclick="saveEdit('${k}')">Save</button>
+        </div>`;
       respEl.appendChild(d);
+    });
+
+    // Populate profile claim dropdown
+    const sel = document.getElementById('profile-select');
+    participants.forEach(p => {
+      const opt = document.createElement('option');
+      opt.value = p.name; opt.textContent = p.name;
+      sel.appendChild(opt);
     });
 
     comp.classList.add('show');
 
-    // Email button
     document.getElementById('email-btn').onclick = () => {
       const body = Object.entries(responses).filter(([k])=>k!=='name')
         .map(([k,v]) => `${qLabels[k]||k}:\n${v}`).join('\n\n');
-      window.location.href = `mailto:nadine@together.health?subject=${encodeURIComponent('Pre-Gathering Response: ' + responses.name)}&body=${encodeURIComponent('From: ' + responses.name + '\n\n' + body)}`;
+      window.location.href = `mailto:nadine@together.health?subject=${encodeURIComponent('Pre-Gathering: ' + responses.name)}&body=${encodeURIComponent('From: ' + responses.name + '\n\n' + body)}`;
     };
     document.getElementById('copy-btn').onclick = () => {
       const body = `Pre-Gathering Response — ${responses.name}\n\n` +
@@ -1185,13 +1315,70 @@ function finalize() {
         setTimeout(() => { btn.textContent = 'Copy to Clipboard'; }, 2000);
       });
     };
+    document.getElementById('claim-btn').onclick = () => {
+      const sel = document.getElementById('profile-select');
+      const name = sel.value;
+      if (!name) { sel.style.borderColor = 'var(--accent)'; return; }
+      localStorage.setItem('profile_' + name, JSON.stringify(responses));
+      document.getElementById('claim-confirmed').classList.add('show');
+      document.getElementById('claim-btn').disabled = true;
+      renderProfiles(); // refresh profile cards
+    };
 
     setTimeout(() => comp.scrollIntoView({ behavior:'smooth', block:'start' }), 300);
   }, 1000);
 }
 
+function toggleEdit(k) {
+  const area = document.getElementById('rea_' + k);
+  area.classList.toggle('open');
+  if (area.classList.contains('open')) {
+    document.getElementById('ret_' + k).focus();
+  }
+}
+
+function saveEdit(k) {
+  const newVal = document.getElementById('ret_' + k).value.trim();
+  if (!newVal) return;
+  responses[k] = newVal;
+  document.getElementById('ra_' + k).textContent = newVal;
+  document.getElementById('rea_' + k).classList.remove('open');
+}
+
+// ─── DRAFT RESTORE ────────────────────────────────────────────────────────────
+function checkDraft() {
+  const raw = localStorage.getItem('survey_draft');
+  if (!raw) return;
+  try {
+    const d = JSON.parse(raw);
+    if (!d.step || d.step < 1) return;
+    const banner = document.getElementById('draft-banner');
+    banner.classList.add('show');
+    document.getElementById('draft-restore').onclick = () => {
+      banner.style.display = 'none';
+      step = d.step; responses = d.responses || {}; uName = d.uName || '';
+      // replay completed messages
+      if (responses.name) addMsg(Qs[0].msg, 'bot'), addMsg(responses.name, 'user');
+      if (responses.q1) {
+        addMsg(typeof Qs[1].msg === 'function' ? Qs[1].msg(uName) : Qs[1].msg, 'bot');
+        addMsg(responses.q1, 'user');
+      }
+      // just jump to current step
+      setProgress(step, Qs.length);
+      nextQ();
+    };
+    document.getElementById('draft-discard').onclick = () => {
+      clearDraft();
+      banner.style.display = 'none';
+      nextQ();
+    };
+  } catch(e) { nextQ(); }
+}
+
 // ─── INIT ─────────────────────────────────────────────────────────────────────
 renderProfiles();
+renderTopics();
+
 inputEl.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); } });
 inputEl.addEventListener('input', () => { inputEl.style.height = 'auto'; inputEl.style.height = Math.min(inputEl.scrollHeight, 120) + 'px'; });
 sendEl.addEventListener('click', send);
@@ -1201,7 +1388,9 @@ let started = false;
 new IntersectionObserver(entries => {
   if (entries[0].isIntersecting && !started) {
     started = true;
-    setTimeout(nextQ, 500);
+    const hasDraft = !!localStorage.getItem('survey_draft');
+    if (hasDraft) { checkDraft(); }
+    else { setTimeout(nextQ, 500); }
   }
 }, { threshold: 0.25 }).observe(document.getElementById('survey'));
 </script>
