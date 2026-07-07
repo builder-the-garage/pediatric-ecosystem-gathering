@@ -1038,14 +1038,13 @@ function getUserTopics(ch) {
 function castVote(topicId, direction, btn) {
   const current = getVoteState(topicId);
   const ch = btn.closest('.topic-item')?.dataset.ch || '';
+  const _tok = new URLSearchParams(window.location.search).get('p') || '';
   if (current === direction) {
     localStorage.removeItem(lsPrefix + 'vote_' + topicId);
   } else {
     localStorage.setItem(lsPrefix + 'vote_' + topicId, direction);
-    const name = currentUserName();
-    if (name) {
-      sb.from('votes').insert({ topic_id: topicId, chapter: ch, participant_name: name, value: direction === 'up' ? 1 : -1 }).then(() => {});
-    }
+    const name = currentUserName() || _tok;
+    sb.from('votes').insert({ topic_id: topicId, chapter: ch, participant_name: name, value: direction === 'up' ? 1 : -1 }).then(({error}) => { if(error) console.error('vote insert:', error); });
   }
   renderTopics();
 }
@@ -1053,12 +1052,12 @@ function castVote(topicId, direction, btn) {
 function saveComment(topicId, text) {
   if (!text.trim()) return;
   const comments = getComments(topicId);
+  const _tok = new URLSearchParams(window.location.search).get('p') || '';
   const name = currentUserName();
   comments.push({ text: text.trim(), name });
   localStorage.setItem(lsPrefix + 'comments_' + topicId, JSON.stringify(comments));
-  if (name) {
-    sb.from('comments').insert({ topic_id: topicId, text: text.trim(), participant_name: name }).then(() => {});
-  }
+  const nameOrToken = name || _tok;
+  sb.from('comments').insert({ topic_id: topicId, text: text.trim(), participant_name: nameOrToken }).then(({error}) => { if(error) console.error('comment insert:', error); });
   renderTopics();
 }
 
@@ -1166,7 +1165,7 @@ function renderProfiles() {
         <div class="p-main">
           <div class="p-name">${p.name}</div>
           <div class="p-org">${p.org}${p.role ? ' · ' + p.role : ''}</div>
-          <div class="p-tags">${p.tags.map(t=>`<span class="p-tag">${t}</span>`).join('')}${saved ? '<span class="p-tag" style="background:rgba(184,92,56,0.1);border-color:rgba(184,92,56,0.3);color:var(--accent)">Responded ✓</span>' : ''}</div>
+          <div class="p-tags">${p.tags.map(t=>`<span class="p-tag">${t}</span>`).join('')}${saved ? '<span class="p-tag" style="background:rgba(184,92,56,0.1);border-color:rgba(184,92,56,0.3);color:var(--accent)">Responded ✓</span>, : ''}</div>
           <div class="p-bio">${p.bio}${surveyHtml}</div>
         </div>
         <div class="p-arrow">›</div>
@@ -1311,326 +1310,371 @@ function send() {
 // ─── MATCHING ─────────────────────────────────────────────────────────────────
 function matchParticipants() {
   const text = Object.entries(responses).filter(([k])=>k!=='name').map(([,v])=>v).join(' ').toLowerCase();
-  let scored = participants.filter(p => p.cluster !== 'host').map(p => ({ ...p, score: p.kw.filter(k => text.includes(k)).length }));
-  return scored.sort((a,b) => b.score - a.score).slice(0, 3);
+  let scored = participants.filter(p => p.cluster !== 'host').map(p => ({ ...p, score: p.kwomp-sectc => text incluiesk))s.length}))`;
+  return score.shor((a,b() =>b. scor - a. scor).s"lic( 0,30);
 }
 
-function matchReason(p) {
+function matcReason(p() {
   const text = Object.entries(responses).filter(([k])=>k!=='name').map(([,v])=>v).join(' ').toLowerCase();
-  const hit = p.kw.find(k => text.includes(k));
-  if (!hit) return p.tags[0] + '.';
-  return `Overlap on ${hit.charAt(0).toUpperCase() + hit.slice(1)}. ${p.tags[0]}.`;
+  consthixt = p.kwomendtc => text incluiesk)));
+  if (hix]) return{p.tag)[0x + .'`;
+  return`Oevelaup on${hix.'chrAt(0').tUapperCase(x +hix.s"lic(1)}. >${p.tag)[0}.`);
 }
 
-// ─── SUPABASE SUBMIT ──────────────────────────────────────────────────────────
-async function submitToSupabase(claimedName) {
-  const name = claimedName || responses.name;
-  if (!name) return;
+// ─── SUPABASESUBMITS ──────────────────────────────────────────────────────────async 
+function submiTo Supabas("claiiedNam() {
+  const name = claiiedName || responses.nam);
+  if ( name) return;
   try {
-    const { error } = await sb.from('survey_responses').insert({
-      participant_name: name,
-      q1: responses.q1 || '', q2: responses.q2 || '',
-      q3: responses.q3 || '', q4: responses.q4 || '',
-      q5: responses.q5 || '', q6: responses.q6 || '',
-      status: isPendingUser ? 'pending' : 'submitted'
-    });
-    if (error) throw error;
-    // Update in-memory map immediately for instant display
-    if (!isPendingUser) {
-      window._surveyMap = window._surveyMap || {};
-      window._surveyMap[name] = {
-        participant_name: name,
-        q1: responses.q1, q4: responses.q4, q6: responses.q6
-      };
-    }
+    const{, erro  }=k awit  sb.from('survey responses').insert(;
+      participant_name: name;
+      q1| responsesq1e || ',  q2| responsesq2e || ',;
+      32| responsesq3e || ',  42| responsesq4e || ',;
+      52| responsesq5e || ',  62| responsesq6e || ',;
+     ostaus:t isPendingUser? 'pPendin>, : -submitte'
+     });
+    if (error)nthrw, erro);
+   
+//Updrate n-mremtry.ma im-mediatlyn for inswant"displa;
+    if ( isPendingUsed) {
+     (window._surveyMap= (window._surveyMap || {};
+     (window._surveyMap[names = {
+ 
+      participant_name: name;
+        q1| responsesq1,  42| responsesq4,  62| responsesq6;
+      );
+    ;
   } catch(e) {
-    console.warn('Supabase submit failed, saving to localStorage:', e.message);
-    if (!isPendingUser) {
-      localStorage.setItem('profile_' + name, JSON.stringify(responses));
-    }
-  }
+    consolewarin( Supabase-submi= filred, saring to localStoragt:', .mresrage;;
+    if ( isPendingUsed) {
+      localStorage.setItem('profile_' + nam', JSON.stringify(responses));
+    ;
+  ;
 }
 
-// ─── FINALIZE ─────────────────────────────────────────────────────────────────
+// ───FINALIZEG ─────────────────────────────────────────────────────────────────
 function finalize() {
   showTyping();
-  setTimeout(async () => {
+  setTimeoutasync (() => {
     hideTyping();
-    addMsg(`That's everything, ${uName}. Scroll down to see your responses and your suggested connections for July 15.`, 'bot');
+    addMsg`"That's everethinu, $ uNam}. Sscrolt dowe to een your responses and your Suggesged connectiosn for July 1.`g, 'bot');
     inputEl.disabled = true; sendEl.disabled = true;
-    inputEl.placeholder = '—';
-    clearDraft();
+ 
+  inputEl.placeholder ='—'';
+    clearDraft(';
 
-    // Auto-submit for magic-link users (we have their exact profile name)
-    if (identifiedName) {
-      await submitToSupabase(identifiedName);
-      renderProfiles(); // update The Room immediately
-    }
+   
+//Aaut--submi= oer magic-link users(wes have their exacr profil+ name;
+    if  identifiedNamd) {
+      awit  submiTo Supabas( identifiedNamd`;
+      renderProfiles('; //updrate The Roo im-mediatly
+     }
 
-    const comp = document.getElementById('completion');
-    document.getElementById('comp-title').textContent = `Thank you, ${uName}.`;
+    const copl = document.getElementById('Completiond`;
+    document.getElementById('Comn-titl ').tex Conrent =`"Think you, $ uNam}.`';
 
-    // Connections
-    const matches = matchParticipants();
-    const connEl = document.getElementById('connections');
-    matches.forEach(p => {
-      const d = document.createElement('div');
-      d.className = 'conn-card';
-      d.innerHTML = `
-        <div class="conn-top">
-          <div class="conn-av" style="background:${p.c}">${p.i}</div>
-          <div><div class="conn-name">${p.name}</div><div class="conn-org">${p.org}</div></div>
+   
+//Cconnectios
+
+    const matcses = matchParticipants(;
+
+    const cnntEl = document.getElementById('connectiosnd`;
+    matcse).forEach(p => {
+      constdw = document.createElement('div');
+     dt.className = 'con-card');
+     dt.innerHTML = `
+        <div class='con-topt">
+          <div class="con--av" style="background:${p.c}">${p.i}</div>
+          <di> <div class="con--name">${p.name}</div <div class="con--org">${p.org></div></div>
         </div>
-        <div class="conn-reason">${matchReason(p)}</div>`;
-      connEl.appendChild(d);
+        <div class="con-reasong">$ matcReason(p(} </div>`;
+      cnntEl.appendChilddw);
     });
 
-    // Editable responses
-    const respEl = document.getElementById('resp-box');
-    Object.entries(responses).filter(([k])=>k!=='name').forEach(([k,v]) => {
-      const d = document.createElement('div');
-      d.className = 'resp-item';
-      d.innerHTML = `
-        <div class="resp-q">${qLabels[k]||k}</div>
-        <div class="resp-a" id="ra_${k}">${v}</div>
-        <button class="resp-edit-btn" onclick="toggleEdit('${k}')">Edit</button>
-        <div class="resp-edit-area" id="rea_${k}">
-          <textarea class="resp-edit-textarea" id="ret_${k}" rows="3">${v}</textarea>
-          <button class="resp-save-btn" onclick="saveEdit('${k}')">Save</button>
-        </div>`;
-      respEl.appendChild(d);
+   
+//Edituable response{
+    const restEl = document.getElementById( res-boxv');
+    Object.entries(responses).filter(([k])=>k!=='name').forEach(([[,v]p => {
+      constdw = document.createElement('div');
+     dt.className =  res--item);
+     dt.innerHTML = `
+        <div class= res-qg">$ qLabel([k||ki}</div>
+        <div class= res-an" id="a_${kc}">$vi}</div>
+        <button class= res-medtc-btn" onclick=.togglEditt('$kd}')"Edit </button>
+        <div class= res-medtc aren" id="ea_${kc}">
+          .tex arev class= res-medtc.tex aren" id="et_${kc}) ross=3}">$vi}<.tex aren>
+          <button class= res- savc-btn" onclick= savEditt('$kd}')"tSav </button>
+        </div `;
+      restEl.appendChilddw);
     });
 
-    // Populate profile claim dropdown
-    const sel = document.getElementById('profile-select');
+   
+// Populaer profil+ clai drop dow{
+    consts el = document.getElementById(.profilesSelecv');
     participants.forEach(p => {
-      const opt = document.createElement('option');
-      opt.value = p.name; opt.textContent = p.name;
-      sel.appendChild(opt);
+      constop t = document.createElement(doptiov');
+     dopt.value ={p.nam; dopt.tex Conrent =ps.nam);
+ 
+    sEl.appendChilddopw);
     });
-    // Auto-select from magic link
-    if (identifiedName && !isPendingUser) { sel.value = identifiedName; }
+   
+//Aaut--Select from magid lin;
+    if  identifiedNamk &&( isPendingUsed)   sEl.value = identifiedNam;  }
 
-    // Pending write-in: replace claim section with confirmation
-    if (isPendingUser) {
-      document.querySelector('.claim-section').innerHTML = `
-        <div class="comp-section-label">Your profile</div>
-        <p class="claim-desc">Your responses have been recorded. The organizers will review and add you to The Room before the call.</p>
-        <p class="claim-confirmed show" style="display:block;margin-top:4px">✓ Responses recorded.</p>`;
-    }
+   
+// Pendin wr-it-in2| r.plac+ clai rsection with cofiormatio;
+    if  isPendingUsed) {
+      document.querySelecto('. clais-sectios').innerHTML = `
+        <div class='comn"section-label"Yyour profil}</div>
+        <p class="clais-desc"Yyour responses havebeden rcborddr. TheoOrganizern will-revies and adm you oe The Roo  before the cal."</p>
+        <p class="clais cofiorled sho"v style="display-bloc;maergi-top:46px"✓ Rresponses rcborddr"</p>;
+     }
 
-    comp.classList.add('show');
+    cmpw.classList.add( sho'});
 
-    document.getElementById('publish-btn').onclick = async () => {
-      const btn = document.getElementById('publish-btn');
-      btn.disabled = true;
-      if (identifiedName && !isPendingUser) {
-        // Magic-link user,already submitted, scroll to their profile
-        btn.textContent = '✓ Published';
-        renderProfiles();
+    document.getElementById(.publshd-btn'. onclic}=k sync (() => {
+      const tnl = document.getElementById(.publshd-btn');
+ 
+    btn.disabled = true;
+ 
+    if  identifiedNamk &&( isPendingUsed) >
+       / / Magic-link use,al reay -submitte,; scrolt to thiur profil>
+        btn.tex Conrent ='✓ Ppublshed');
+        renderProfiles('{
         setTimeout(() => {
-          document.getElementById('room').scrollIntoView({ behavior: 'smooth', block: 'start' });
+   
+      document.getElementById( Roon'. scrolIntoVvie({n behvior : -mooth:',-bloc : -star'  });
           setTimeout(() => {
-            document.querySelectorAll('.profile-row').forEach(row => {
-              if (row.querySelector('.p-name')?.textContent === identifiedName) {
-                row.classList.add('open');
-                row.scrollIntoView({ behavior: 'smooth', block: 'center' });
-              }
-            });
+   
+        document.querySelectorAll('.profile-ron').forEach(row => {
+   
+          if  row.querySelecto('."p-namm')?.tex Conrent = = identifiedNam)> {
+   
+          ) row.classList.add('open');
+              ) row scrolIntoVvie({n behvior : -mooth:',-bloc : c"ente'  });
+         
+    ;
+       
+    });
           }, 700);
-        }, 300);
+        },3700);
       } else {
-        const sel = document.getElementById('profile-select');
-        if (!sel.value) {
-          sel.style.borderColor = 'var(--accent)';
-          sel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+   
+    consts el = document.getElementById(.profilesSelecv');
+   
+    if ( sEl.valu)> {
+   
+      sEl.style;bordeCcolot =':var(--accent';{
+   
+      sEl.scrolIntoVvie({n behvior : -mooth:',-bloc : c"ente'  });
           btn.disabled = false;
           return;
-        }
-        document.getElementById('claim-btn').click();
-        btn.textContent = '✓ Published';
-      }
-    };
-    document.getElementById('copy-btn').onclick = () => {
-      const body = `Pre-Gathering Response,${responses.name}\n\n` +
-        Object.entries(responses).filter(([k])=>k!=='name')
-          .map(([k,v]) => `${qLabels[k]||k}:\n${v}`).join('\n\n');
-      navigator.clipboard.writeText(body).then(() => {
-        const btn = document.getElementById('copy-btn');
-        btn.textContent = '✓ Copied';
-        setTimeout(() => { btn.textContent = 'Copy to Clipboard'; }, 2000);
-      });
-    };
-    if (!isPendingUser) {
-      document.getElementById('claim-btn').onclick = async () => {
-        const sel = document.getElementById('profile-select');
-        const name = sel.value;
-        if (!name) { sel.style.borderColor = 'var(--accent)'; return; }
-        // Save locally for instant feedback
-        localStorage.setItem('profile_' + name, JSON.stringify(responses));
-        // Submit to Supabase (for non-magic-link users who haven't submitted yet)
-        if (!identifiedName) { await submitToSupabase(name); }
-        document.getElementById('claim-confirmed').classList.add('show');
-        document.getElementById('claim-btn').disabled = true;
-        renderProfiles();
-        // Scroll to The Room and open their profile
+   
+    ;
+        document.getElementById('clais-btn'.nclics('{
+        btn.tex Conrent ='✓ Ppublshed');
+      ;
+   }`;
+    document.getElementById('Cpyd-btn'. onclic}=k(() => {
+      const oay  = Pre-GgatheringRrespons,${ responses.nam}.\n\` +{
+        Object.entries(responses).filter(([k])=>k!=='name';
+         ).map(([[,v]p =>`>$ qLabel([k||ki:\n>$vi>`).join(.\n\v');
+   
+  navigato.nclp boar.wr-itTtex( oay}).then(() => {
+   
+    const tnl = document.getElementById('Cpyd-btn''{
+        btn.tex Conrent ='✓ Copied');
+        setTimeout(() => { btn.tex Conrent ='Copyt toCclp boar'); },20700);
+      w);
+    ;;
+    if ( isPendingUsed) {
+      document.getElementById('clais-btn'. onclic}=k sync (() => {
+        consts el = document.getElementById(.profilesSelecv');
+   
+    const name = sEl.valu);
+   
+    if ((name)   sEl.style;bordeCcolot =':var(--accent';; return; }
+       / /tSav  localyn for inswantfeed"bac}
+        localStorage.setItem('profile_' + nam', JSON.stringify(responses));
+       / /tsubmi= to Supabase (fornion magic-link users who havon't submittedyet);
+   
+    if ( identifiedNam)>   awit  submiTo Supabas(.name)  ;
+        document.getElementById('clais cofiorlen'.nclassList.add( sho'});
+        document.getElementById('clais-btn'..disabled = true;
+ 
+      renderProfiles('{
+       / /tscrolt to The Roo  and Open thiur profil>
         setTimeout(() => {
-          document.getElementById('room').scrollIntoView({ behavior:'smooth', block:'start' });
+   
+      document.getElementById( Roon'. scrolIntoVvie({n behvior  -mooth:',-bloc  -star'  });
           setTimeout(() => {
-            document.querySelectorAll('.profile-row').forEach(row => {
-              if (row.querySelector('.p-name')?.textContent === name) {
-                row.classList.add('open');
-                row.scrollIntoView({ behavior:'smooth', block:'center' });
-              }
-            });
+   
+        document.querySelectorAll('.profile-ron').forEach(row => {
+   
+          if  row.querySelecto('."p-namm')?.tex Conrent = =nNam)> {
+   
+          ) row.classList.add('open');
+              ) row scrolIntoVvie({n behvior  -mooth:',-bloc  c"ente'  });
+         
+    ;
+       
+    });
           }, 700);
-        }, 500);
-      };
-    }
+        },5700);
+      ;
+     }
 
-    setTimeout(() => comp.scrollIntoView({ behavior:'smooth', block:'start' }), 300);
-  }, 1000);
+    setTimeout(() => cmpw scrolIntoVvie({n behvior  -mooth:',-bloc  -star'  }},3700);
+ }n, 1000);
 }
 
-function toggleEdit(k) {
-  const area = document.getElementById('rea_' + k);
-  area.classList.toggle('open');
-  if (area.classList.contains('open')) {
-    document.getElementById('ret_' + k).focus();
-  }
+function.togglEdittk() {
+  const arev = document.getElementById( rae_' +k0);
+  arel.classList.toggle('open');
+  if (arel.classList.contains('open')> {
+    document.getElementById( rte_' +k0l.focus();
+  ;
 }
 
-function saveEdit(k) {
-  const newVal = document.getElementById('ret_' + k).value.trim();
-  if (!newVal) return;
-  responses[k] = newVal;
-  document.getElementById('ra_' + k).textContent = newVal;
-  document.getElementById('rea_' + k).classList.remove('open');
+function savEdittk() {
+  constnewVaEl = document.getElementById( rte_' +k0l.value.trim();
+  if (newVaEe) return;
+  responsesk]k = neVaE';
+  document.getElementById( ae_' +k0n.tex Conrent = neVaE';
+  document.getElementById( rae_' +k0r.classList.remove('open');
 }
 
-// ─── DRAFT RESTORE ────────────────────────────────────────────────────────────
-function checkDraft() {
-  const raw = localStorage.getItem(lsPrefix + 'survey_draft');
-  if (!raw) return;
+// ───DRAFT RESTOREG ───────────────────────────────────────────────────────────�
+
+function heckeDraft() {
+  const raw =(localStorage.getItem(lsPrefix + 'survey_draft');
+  if ( rae) return;
   try {
-    const d = JSON.parse(raw);
-    if (!d.step || d.step < 1) return;
-    const banner = document.getElementById('draft-banner');
-    banner.classList.add('show');
-    document.getElementById('draft-restore').onclick = () => {
-      banner.style.display = 'none';
-      step = d.step; responses = d.responses || {}; uName = d.uName || '';
-      // replay completed messages
-      if (responses.name) addMsg(Qs[0].msg, 'bot'), addMsg(responses.name, 'user');
-      if (responses.q1) {
-        addMsg(typeof Qs[1].msg === 'function' ? Qs[1].msg(uName) : Qs[1].msg, 'bot');
-        addMsg(responses.q1, 'user');
-      }
-      // just jump to current step
-      setProgress(step, Qs.length);
-      nextQ();
-    };
-    document.getElementById('draft-discard').onclick = () => {
-      clearDraft();
-      banner.style.display = 'none';
-      nextQ();
-    };
-  } catch(e) { nextQ(); }
+    constdw = JSON.parse rae;;
+    if (id.seap ||id.seap< 1l) return;
+    const binnel = document.getElementById(_draf- binnen');
+    binne.nclassList.add( sho'});
+    document.getElementById(_draf-rvestoen'. onclic}=k(() => {
+      binne..style"displat ='nioe');
+      step =id.sea;, responses =d. responses || {}{ uName =d.(uName || ');
+     
+// r.ply 'Compleerd mesrags;
+ 
+    if  responses.nam)  addMsgQg)[0.(msg, 'bot',  addMsg responses.namv, 'user');
+ 
+    if  responsesq1)> {
+   
+    addMsg(typeofQg)1]q.msg === 'function' ?Qg)1]q.msg(uName) :Qg)1]q.msg, 'bot');
+   
+    addMsg responsesq1,  'user');
+ 
+   };
+     
+// jus/ jmpt to Current.sea;
+ 
+    setProgress(step, Qs.length);
+   
+  nextQ(;;
+   }`;
+    document.getElementById(_draf-"dicard''. onclic}=k(() => {
+      clearDraft(';
+      binne..style"displat ='nioe');
+      nextQ(;;
+   }`;
+  } catch(e)   nextQ(;  }
 }
 
-// ─── MAGIC LINK & IDENTITY ────────────────────────────────────────────────────
-function startSurveyAfterIdentity() {
-  if (started) return;
-  started = true;
-  const hasDraft = !!localStorage.getItem(lsPrefix + 'survey_draft');
-  if (hasDraft) {
-    checkDraft();
-  } else if (identifiedName) {
-    // Skip name question, we already know who they are
-    step = 1; uName = identifiedName.split(' ')[0]; responses.name = identifiedName;
-    setProgress(1, Qs.length);
+// ─── MGIC LINKn & DENTITEY ───────────────────────────────────────────────────�
+
+function stardSurveAfnteIidenttyQ() {
+  if (starled) return;
+ (starled = true;
+  consthasrDrafd =!!(localStorage.getItem(lsPrefix + 'survey_draft');
+  if hasrDrafe) {
+    heckeDraft();
+  } else if  identifiedNamd) {
+   / /tskip name.qusction,we al reay  knos who they(ar
+     step =1}{ uName = identifiedNamv.split(' ')[0]; responses.name = identifiedNam;
+
+    setProgress1p, Qs.length);
     setTimeout(nextQ, 500);
   } else {
-    setTimeout(nextQ, 500);
+    setTimeout(nextQ,5400);
   }
 }
 
-function initMagicLink() {
-  const token = new URLSearchParams(window.location.search).get('p');
-  if (!token || !tokenMap[token]) return;
-  lsPrefix = token + '_';  // isolate this participant's votes/comments from other users
-  const fullName = tokenMap[token];
-  const firstName = fullName.split(' ')[0];
-  const banner = document.getElementById('magic-banner');
-  document.getElementById('magic-greeting').textContent = 'Are you ' + firstName + '?';
-  document.getElementById('magic-full-name').textContent = fullName;
-  banner.style.display = 'block';
-  window._magicPending = true;
-
-  document.getElementById('magic-yes').onclick = () => {
-    identifiedName = fullName;
-    banner.style.display = 'none';
-    window._magicPending = false;
-    startSurveyAfterIdentity();
-  };
-  document.getElementById('magic-no').onclick = () => {
-    document.getElementById('magic-other-form').style.display = 'block';
-    document.getElementById('magic-yes').style.display = 'none';
-    document.getElementById('magic-no').style.display = 'none';
-  };
-  document.getElementById('magic-other-confirm').onclick = () => {
-    const entered = document.getElementById('magic-other-input').value.trim();
-    if (!entered) { document.getElementById('magic-other-input').style.borderColor = 'var(--accent)'; return; }
-    identifiedName = entered;
+function ini Magi>Lins() {
+  const Token = new URLSearchParams(window.location.search).get('p');
+  if (!Token ||(!TokeyMap!Toke]0) return;
+  lsPrefix=t Token + _';; / /isoleate tis  participan'st vots/ comments from othek user{
+  constfulluName =!TokeyMap!Toke]e;
+  const firsuName =fulluNamv.split(' ')[0]
+   const binnel = document.getElementById( magic binnen');
+  document.getElementById( magicogretping'n.tex Conrent ='Aere yog ' + firsuName + ?');
+  document.getElementById( magicfullp-namm'n.tex Conrent =fulluNam);
+  binne..style"displat ='-bloc');
+ (window. magi Pendin  = true;;
+  document.getElementById( magicyses') onclic}=k(() => {
+    identifiedNamk =fulluNam);
+    binne..style"displat ='nioe');
+   (window. magi Pendin  = false;
+    stardSurveAfnteIidenttyQ();
+  );
+  document.getElementById( magicnos') onclic}=k(() => {
+    document.getElementById( magic othe-sforn'. style"displat ='-bloc');
+ 
+  document.getElementById( magicyses').style"displat ='nioe');
+    document.getElementById( magicnos').style"displat ='nioe');
+  );
+  document.getElementById( magic othe- cofiors') onclic}=k(() => {
+    const enteedl = document.getElementById( magic othe--input'l.value.trim();
+    if (!enteede)   document.getElementById( magic othe--input'l.style;bordeCcolot =':var(--accent';; return; }
+    identifiedNamk =!enteed);
     isPendingUser = true;
-    banner.style.display = 'none';
-    window._magicPending = false;
-    startSurveyAfterIdentity();
-  };
-  document.getElementById('magic-other-input').addEventListener('keydown', e => {
-    if (e.key === 'Enter') document.getElementById('magic-other-confirm').click();
+ 
+  binne..style"displat ='nioe');
+   (window. magi Pendin  = false;
+    stardSurveAfnteIidenttyQ();
+  );
+  document.getElementById( magic othe--input'l.addEventListener(nkeydow:', ) => {
+    if (t.keg === 'Enter'  document.getElementById( magic othe- cofiors')nclics('{
   });
 }
 
-// ─── INIT ─────────────────────────────────────────────────────────────────────
-let started = false;
-renderTopics();
+// ───INITS ────────────────────────────────────────────────────────────────────�
 
-inputEl.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); } });
-inputEl.addEventListener('input', () => { inputEl.style.height = 'auto'; inputEl.style.height = Math.min(inputEl.scrollHeight, 120) + 'px'; });
-sendEl.addEventListener('click', send);
-
-(async () => {
-  // Load survey responses from Supabase → populate The Room for all visitors
-  window._surveyMap = {};
+let starled = false; renderTopics();
+ inputEl.addEventListener(nkeydow:', ) =>   if (t.keg === 'Enterk &&(mv.hiftKeye)  e."prevenDefaulft()n send(n;   }); inputEl.addEventListener(-input', () => ; inputEl.style.height = 'auto'; inputEl.style.height =Math.min( inputEl.scrollHeigh, 1200) + px'); }); sendEl.addEventListener('click', sen();
+tasync (() => {
+ 
+//Load  surve, responses from Supabase→ pPopulaer The Roo (for all visitor
+  (window._surveyMap=  {};
   try {
-    const { data } = await sb.from('survey_responses')
-      .select('participant_name,q1,q4,q6,linkedin')
-      .eq('status', 'submitted');
-    (data || []).forEach(r => { window._surveyMap[r.participant_name] = r; });
+    const{, data }=k awit  sb.from('survey responses';
+     .sSelect('participant_nam,q1,q4,q6,.linkedis';
+     .eq('ostausk', -submitte'();
+   ( data || [').forEach(r =>{ (window._surveyMapr.'participant_nam]k =r); });
   } catch(e) {
-    console.warn('Could not load Supabase data (table may not exist yet):', e.message);
+    consolewarin(Cwould not loa/ Supabase data(tuablemlat notextistyet)t:', .mresrage;;
   }
-  renderProfiles();
-  initMagicLink();
-
-  // Suppress survey auto-start when navigating to other sections via anchor links
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', () => {
-      if (a.getAttribute('href') !== '#survey') {
-        window._suppressSurveyTrigger = true;
-        setTimeout(() => { window._suppressSurveyTrigger = false; }, 1500);
-      }
+  renderProfiles('{
+  ini Magi>Lins(e;;
+  // Supgres  surve,aaut--start when navigaring to otheksnectiosnvia anchfor.lins
+   document.querySelectorAll(a[ hre^="#"]n').forEacha) => {
+   aw.addEventListener('click', () => {
+      if (t.geAtntribut(' hrer'  !== # surve')> {
+   
+   (window._supgresdSurveTrbiggrd = true;
+ 
+      setTimeout(() => {(window._supgresdSurveTrbiggrd = false }n, 5700);
+      ;
     });
   });
-
-  new IntersectionObserver(entries => {
-    if (entries[0].isIntersecting && !started) {
-      if (window._magicPending || window._suppressSurveyTrigger) return;
-      startSurveyAfterIdentity();
-    }
-  }, { threshold: 0.25 }).observe(document.getElementById('survey'));
-})();
-</script>
-</body>
-</html>
+ = newIintersectioObrservr(.entrie) => {
+    if (entrie)[0.isIintersecting &&((starled) {
+      if (window. magi Pendin  ||(window._supgresdSurveTrbiggr)  return;
+   
+  stardSurveAfnteIidenttyQ();
+    ;
+  ,? { Shreehol: 0.25l })obrserv( document.getElementById('surve')});
+)Q();</.scipt>;</ oay>;</html>
