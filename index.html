@@ -325,7 +325,7 @@
     }
     .vote-btn:hover { border-color: rgba(255,255,255,0.3); color: rgba(255,255,255,0.7); }
     .vote-btn.voted-up { background: rgba(184,92,56,0.2); border-color: var(--accent); color: var(--accent); }
-    .vote-btn.voted-down { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.2); color: rgba(255,255,255,0.4); }
+    .vote-btn.voted-down { background: rgba(70,100,200,0.2); border-color: rgba(120,150,240,0.65); color: rgba(160,190,255,0.95); }
     .comment-toggle {
       background: none; border: none; color: rgba(255,255,255,0.2);
       font-size: 11px; cursor: pointer; padding: 3px 6px;
@@ -342,6 +342,8 @@
       padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.04);
     }
     .comment-item:last-of-type { border-bottom: none; }
+    .comment-author { font-size: 10px; font-weight: 600; color: var(--accent); letter-spacing: 0.05em; margin-right: 5px; }
+    .topic-adder { font-size: 10px; color: rgba(255,255,255,0.28); margin-top: 4px; letter-spacing: 0.02em; }
     .comment-input-row { display: flex; gap: 8px; margin-top: 10px; }
     .comment-input {
       flex: 1; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
@@ -570,7 +572,7 @@
     Bright Minds:<br>
     <em>Bioscience &amp; Medtech Innovation</em>
   </h1>
-  <p class="hero-sub">A curated gathering of clinicians, founders, funders, and ecosystem builders aimed at reframing and collaborating on the hardest problems in health translation.</p>
+  <p class="hero-sub">A curated gathering of clinicians, founders, funders, and<br>ecosystem builders aimed at reframing and collaborating on<br>the hardest problems in health translation.</p>
   <div class="hero-details">
     <div class="hero-detail">
       <div class="hero-detail-label">Date</div>
@@ -603,7 +605,7 @@
 <div class="pull-quote-section">
   <div class="pull-quote-inner">
     <span class="pull-quote-mark">"</span>
-    <p class="pull-quote-text">Too many brilliant teams are working on the right things and still not getting them to the patients who need them. We want to name the frictions honestly, reframe them systemically and initiate meaningful progress collectively.</p>
+    <p class="pull-quote-text">Too many brilliant teams are working on the right things and still not getting them to the patients who need them. We want to name the frictions honestly, reframe them systemically and initiate progress collectively.</p>
     <p class="pull-quote-attr">— Nadine Afari &amp; Rami</p>
   </div>
 </div>
@@ -708,7 +710,7 @@
         <div class="responses-box" id="resp-box"></div>
 
         <div class="submit-row">
-          <button class="btn btn-dark" id="email-btn">Send to Organizers</button>
+          <button class="btn btn-dark" id="publish-btn">Publish to The Room</button>
           <button class="btn btn-outline" id="copy-btn">Copy to Clipboard</button>
         </div>
 
@@ -810,7 +812,7 @@
   <div class="section-inner">
     <div class="section-eyebrow">Step 3 · The Room</div>
     <div class="section-title">Who You'll Be In Conversation With</div>
-    <p class="section-desc">FZteen people. Click any name to read more. Complete Step 1 and link your profile — your introduction will appear here for everyone else.</p>
+    <p class="section-desc">Fifteen people. Click any name to read more. Complete Step 1 and link your profile — your introduction will appear here for everyone else.</p>
 
     <div class="cluster-block">
       <div class="cluster-header">
@@ -831,7 +833,7 @@
     <div class="cluster-block">
       <div class="cluster-header">
         <span class="cluster-num">II.</span>
-        <span class="cluster-name">Capital &amp; Commercialization ─�� Funding, Payers &amp; Market Access</span>
+        <span class="cluster-name">Capital &amp; Commercialization — Funding, Payers &amp; Market Access</span>
       </div>
       <div id="cluster-b"></div>
     </div>
@@ -849,7 +851,7 @@
 <!-- ─── FOOTER ─── -->
 <footer>
   <div class="footer-left">
-    Organized by <strong>Nadine Afari</strong> (Rady Children's · UC Svine · Together.Health)
+    Organized by <strong>Nadine Afari</strong> (Rady Children's · UC Irvine · Together.Health)
     and <strong>Rami</strong> (The Garage)
   </div>
   <div class="footer-right">
@@ -990,9 +992,9 @@ const participants = [
 // ─── TOPICS DATA ──────────────────────────────────────────────────────────────
 const topicsData = {
   ch01: [
-    { id:'as1', text:'What emerging healthcare innovation and clinical research areas are currently underrecognized but could become high value within the next 5–10 years?', cat:'Horizon Scanning' },
+    { id:'hs1', text:'What emerging healthcare innovation and clinical research areas are currently underrecognized but could become high value within the next 5–10 years?', cat:'Horizon Scanning' },
     { id:'hs2', text:'What signals or methods have proven most reliable for spotting emerging opportunities before they become obvious?', cat:'Horizon Scanning' },
-    { id:'as3', text:'How should we structure a convening of top researchers across domains to surface underrecognized areas most effectively?', cat:'Horizon Scanning' },
+    { id:'hs3', text:'How should we structure a convening of top researchers across domains to surface underrecognized areas most effectively?', cat:'Horizon Scanning' },
     { id:'tc1', text:'Where does translation from science to real-world products most often break down, and why?', cat:'Translational Capabilities' },
     { id:'tc2', text:'What capabilities are still missing in the broader ecosystem to make translation faster and more reliable?', cat:'Translational Capabilities' }
   ],
@@ -1011,7 +1013,10 @@ const topicsData = {
 // ─── TOPIC FUNCTIONS ──────────────────────────────────────────────────────────
 function getVoteState(id) { return localStorage.getItem('vote_' + id) || null; }
 function getComments(id) {
-  try { return JSON.parse(localStorage.getItem('comments_' + id) || '[]'); }
+  try {
+    const raw = JSON.parse(localStorage.getItem('comments_' + id) || '[]');
+    return raw.map(c => typeof c === 'string' ? { text: c, name: '' } : c);
+  }
   catch(e) { return []; }
 }
 function getUserTopics(ch) {
@@ -1021,10 +1026,15 @@ function getUserTopics(ch) {
 
 function castVote(topicId, direction, btn) {
   const current = getVoteState(topicId);
+  const ch = btn.closest('.topic-item')?.dataset.ch || '';
   if (current === direction) {
     localStorage.removeItem('vote_' + topicId);
   } else {
     localStorage.setItem('vote_' + topicId, direction);
+    const name = currentUserName();
+    if (name) {
+      sb.from('votes').insert({ topic_id: topicId, chapter: ch, participant_name: name, value: direction === 'up' ? 1 : -1 }).then(() => {});
+    }
   }
   renderTopics();
 }
@@ -1032,8 +1042,12 @@ function castVote(topicId, direction, btn) {
 function saveComment(topicId, text) {
   if (!text.trim()) return;
   const comments = getComments(topicId);
-  comments.push(text.trim());
+  const name = currentUserName();
+  comments.push({ text: text.trim(), name });
   localStorage.setItem('comments_' + topicId, JSON.stringify(comments));
+  if (name) {
+    sb.from('comments').insert({ topic_id: topicId, text: text.trim(), participant_name: name }).then(() => {});
+  }
   renderTopics();
 }
 
@@ -1042,30 +1056,35 @@ function addUserTopic(ch) {
   const text = input.value.trim();
   if (!text) return;
   const topics = getUserTopics(ch);
-  topics.push({ id: 'u_' + Date.now(), text, cat: 'Your Addition' });
+  const name = currentUserName();
+  const id = 'u_' + Date.now();
+  topics.push({ id, text, cat: 'Your Addition', name });
   localStorage.setItem('utopics_' + ch, JSON.stringify(topics));
+  sb.from('topics').insert({ id, chapter: ch, text, participant_name: name || null }).then(() => {});
   input.value = '';
   renderTopics();
 }
 
-function buildTopicItem(t) {
+function buildTopicItem(t, ch) {
   const voteState = getVoteState(t.id);
   const comments = getComments(t.id);
   const isUser = t.id.startsWith('u_');
 
   const div = document.createElement('div');
   div.className = 'topic-item' + (isUser ? ' user-topic-item' : '');
+  div.dataset.ch = ch || '';
+  const adderHtml = isUser && t.name ? `<div class="topic-adder">Added by ${t.name}</div>` : '';
   div.innerHTML = `
     <div class="topic-main">
-      <div class="topic-text">${t.text}</div>
+      <div class="topic-text">${t.text}${adderHtml}</div>
       <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0;padding-left:16px">
         <span class="topic-cat">${t.cat}</span>
         <div class="topic-actions">
           <button class="vote-btn ${voteState === 'up' ? 'voted-up' : ''}" onclick="castVote('${t.id}','up',this)">
-            ↑ ${voteState === 'up' ? 'Relevant' : 'Relevant'}
+            ↑ Relevant
           </button>
           <button class="vote-btn ${voteState === 'down' ? 'voted-down' : ''}" onclick="castVote('${t.id}','down',this)">
-            ↓
+            ↓ Not Relevant
           </button>
           <button class="comment-toggle" onclick="toggleComments('${t.id}')">
             ${comments.length > 0 ? comments.length + ' comment' + (comments.length !== 1 ? 's' : '') : 'Comment'}
@@ -1074,7 +1093,7 @@ function buildTopicItem(t) {
       </div>
     </div>
     <div class="topic-comments" id="tc_${t.id}">
-      ${comments.map(c => `<div class="comment-item">${c}</div>`).join('')}
+      ${comments.map(c => `<div class="comment-item">${c.name ? `<span class="comment-author">${c.name}</span>` : ''}${c.text}</div>`).join('')}
       <div class="comment-input-row">
         <input class="comment-input" id="ci_${t.id}" placeholder="Add a comment…" onkeydown="if(event.key==='Enter'){saveComment('${t.id}',this.value);this.value='';}">
         <button class="comment-submit" onclick="const i=document.getElementById('ci_${t.id}');saveComment('${t.id}',i.value);i.value=''">Add</button>
@@ -1096,7 +1115,7 @@ function renderTopics() {
     el.innerHTML = '';
     const base = topicsData[ch] || [];
     const user = getUserTopics(ch);
-    [...base, ...user].forEach(t => el.appendChild(buildTopicItem(t)));
+    [...base, ...user].forEach(t => el.appendChild(buildTopicItem(t, ch)));
   });
 }
 
@@ -1127,6 +1146,7 @@ function renderProfiles() {
             ${saved.q6 ? `<p class="p-survey-intro">"${saved.q6}"</p>` : ''}
             ${saved.q1 ? `<div class="p-answer-item"><div class="p-answer-q">Current work &amp; biggest friction</div><div class="p-answer-a">${saved.q1}</div></div>` : ''}
             ${saved.q4 ? `<div class="p-answer-item"><div class="p-answer-q">What they want to walk away with</div><div class="p-answer-a">${saved.q4}</div></div>` : ''}
+            ${saved.linkedin ? `<div class="p-answer-item"><div class="p-answer-q">LinkedIn</div><div class="p-answer-a"><a href="${saved.linkedin}" target="_blank" rel="noopener" style="color:var(--accent)">${saved.linkedin}</a></div></div>` : ''}
           </div>`;
       }
 
@@ -1216,11 +1236,13 @@ function scroll() { msgsEl.scrollTop = msgsEl.scrollHeight; }
 function addMsg(text, who) {
   const m = document.createElement('div');
   m.className = 'msg ' + who;
-  const lbl = who === 'bot' ? 'The Gathering' : (uName || 'You');
-  m.innerHTML = `<div class="msg-label">${lbl}</div><div class="msg-text">${text}</div>`;
+  const lbl = who === 'bot' ? null : (uName || 'You');
+  m.innerHTML = `${lbl ? `<div class="msg-label">${lbl}</div>` : ''}<div class="msg-text">${text}</div>`;
   msgsEl.appendChild(m);
   scroll();
 }
+
+function currentUserName() { return identifiedName || responses.name || ''; }
 
 function showTyping() {
   const t = document.createElement('div');
@@ -1388,10 +1410,35 @@ function finalize() {
 
     comp.classList.add('show');
 
-    document.getElementById('email-btn').onclick = () => {
-      const body = Object.entries(responses).filter(([k])=>k!=='name')
-        .map(([k,v]) => `${qLabels[k]||k}:\n${v}`).join('\n\n');
-      window.location.href = `mailto:nadine@together.health?subject=${encodeURIComponent('Pre-Gathering: ' + responses.name)}&body=${encodeURIComponent('From: ' + responses.name + '\n\n' + body)}`;
+    document.getElementById('publish-btn').onclick = async () => {
+      const btn = document.getElementById('publish-btn');
+      btn.disabled = true;
+      if (identifiedName && !isPendingUser) {
+        // Magic-link user — already submitted, scroll to their profile
+        btn.textContent = '✓ Published';
+        renderProfiles();
+        setTimeout(() => {
+          document.getElementById('room').scrollIntoView({ behavior: 'smooth', block: 'start' });
+          setTimeout(() => {
+            document.querySelectorAll('.profile-row').forEach(row => {
+              if (row.querySelector('.p-name')?.textContent === identifiedName) {
+                row.classList.add('open');
+                row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              }
+            });
+          }, 700);
+        }, 300);
+      } else {
+        const sel = document.getElementById('profile-select');
+        if (!sel.value) {
+          sel.style.borderColor = 'var(--accent)';
+          sel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          btn.disabled = false;
+          return;
+        }
+        document.getElementById('claim-btn').click();
+        btn.textContent = '✓ Published';
+      }
     };
     document.getElementById('copy-btn').onclick = () => {
       const body = `Pre-Gathering Response — ${responses.name}\n\n` +
@@ -1546,7 +1593,7 @@ sendEl.addEventListener('click', send);
   window._surveyMap = {};
   try {
     const { data } = await sb.from('survey_responses')
-      .select('participant_name,q1,q4,q6')
+      .select('participant_name,q1,q4,q6,linkedin')
       .eq('status', 'submitted');
     (data || []).forEach(r => { window._surveyMap[r.participant_name] = r; });
   } catch(e) {
@@ -1555,9 +1602,19 @@ sendEl.addEventListener('click', send);
   renderProfiles();
   initMagicLink();
 
+  // Suppress survey auto-start when navigating to other sections via anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', () => {
+      if (a.getAttribute('href') !== '#survey') {
+        window._suppressSurveyTrigger = true;
+        setTimeout(() => { window._suppressSurveyTrigger = false; }, 1500);
+      }
+    });
+  });
+
   new IntersectionObserver(entries => {
     if (entries[0].isIntersecting && !started) {
-      if (window._magicPending) return; // wait for identity confirmation
+      if (window._magicPending || window._suppressSurveyTrigger) return;
       startSurveyAfterIdentity();
     }
   }, { threshold: 0.25 }).observe(document.getElementById('survey'));
