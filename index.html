@@ -869,16 +869,19 @@ const sb = supabase.createClient(
 // ─── TOKEN MAP ────────────────────────────────────────────────────────────────
 const tokenMap = {
   'na8x2': 'Nadine Afari',     'ra4k1': 'Rami',
+  'lm4x8': 'Luis Martínez, Ph.D.', 'cg2t5': 'Carlos Gutierrez',
+  'am7r6': 'Andrew Moomey, MBA',   'hm1n6': 'Helen McBride, PhD',
   'rd7m3': 'Rachel Dixon',     'gz2p5': 'Greg Zapotoczny, PhD',
   'lm9q7': 'Larissa May, MD',  'ls3h4': 'Lois Sayrs, PhD',
-  'gs6w9': 'Gunjan Siroya',    'hm1n6': 'Helen McBride, PhD',
-  'kk5r8': 'Karin Koch',       'ar2y3': 'Amir Rahimi, PhD',
-  'jy7k2': 'John Younger, MD', 'ps4t6': 'Prashant Samant',
-  'rs8b1': 'Rasu Shrestha, MD, MBA', 'fs3v7': 'Frank Sawyer',
-  'sh6m4': 'Stefany Y. Holguin, PhD'
+  'kk5r8': 'Karin Koch, MPH',  'ar2y3': 'Amir Rahimi, PhD',
+  'jy7k2': 'John Younger, MD', 'fs3v7': 'Frank Sawyer',
+  'sh6m4': 'Stefany Y. Holguin, PhD', 'ew5k2': 'Eva Winter, PhD',
+  'gs6w9': 'Gunjan Siroya',    'ps4t6': 'Prashant Samant',
+  'rs8b1': 'Rasu Shrestha, MD, MBA'
 };
 let identifiedName = null;
 let isPendingUser = false;
+let lsPrefix = '';  // namespaced per magic-link token so users don't share localStorage
 
 // ─── PARTICIPANTS ─────────────────────────────────────────────────────────────
 const participants = [
@@ -1011,16 +1014,16 @@ const topicsData = {
 };
 
 // ─── TOPIC FUNCTIONS ──────────────────────────────────────────────────────────
-function getVoteState(id) { return localStorage.getItem('vote_' + id) || null; }
+function getVoteState(id) { return localStorage.getItem(lsPrefix + 'vote_' + id) || null; }
 function getComments(id) {
   try {
-    const raw = JSON.parse(localStorage.getItem('comments_' + id) || '[]');
+    const raw = JSON.parse(localStorage.getItem(lsPrefix + 'comments_' + id) || '[]');
     return raw.map(c => typeof c === 'string' ? { text: c, name: '' } : c);
   }
   catch(e) { return []; }
 }
 function getUserTopics(ch) {
-  try { return JSON.parse(localStorage.getItem('utopics_' + ch) || '[]'); }
+  try { return JSON.parse(localStorage.getItem(lsPrefix + 'utopics_' + ch) || '[]'); }
   catch(e) { return []; }
 }
 
@@ -1028,9 +1031,9 @@ function castVote(topicId, direction, btn) {
   const current = getVoteState(topicId);
   const ch = btn.closest('.topic-item')?.dataset.ch || '';
   if (current === direction) {
-    localStorage.removeItem('vote_' + topicId);
+    localStorage.removeItem(lsPrefix + 'vote_' + topicId);
   } else {
-    localStorage.setItem('vote_' + topicId, direction);
+    localStorage.setItem(lsPrefix + 'vote_' + topicId, direction);
     const name = currentUserName();
     if (name) {
       sb.from('votes').insert({ topic_id: topicId, chapter: ch, participant_name: name, value: direction === 'up' ? 1 : -1 }).then(() => {});
@@ -1044,7 +1047,7 @@ function saveComment(topicId, text) {
   const comments = getComments(topicId);
   const name = currentUserName();
   comments.push({ text: text.trim(), name });
-  localStorage.setItem('comments_' + topicId, JSON.stringify(comments));
+  localStorage.setItem(lsPrefix + 'comments_' + topicId, JSON.stringify(comments));
   if (name) {
     sb.from('comments').insert({ topic_id: topicId, text: text.trim(), participant_name: name }).then(() => {});
   }
@@ -1059,7 +1062,7 @@ function addUserTopic(ch) {
   const name = currentUserName();
   const id = 'u_' + Date.now();
   topics.push({ id, text, cat: 'Your Addition', name });
-  localStorage.setItem('utopics_' + ch, JSON.stringify(topics));
+  localStorage.setItem(lsPrefix + 'utopics_' + ch, JSON.stringify(topics));
   sb.from('topics').insert({ id, chapter: ch, text, participant_name: name || null }).then(() => {});
   input.value = '';
   renderTopics();
@@ -1256,10 +1259,10 @@ function setProgress(done, total) { progEl.style.width = (done / total * 100) + 
 
 function saveDraft() {
   if (step === 0) return;
-  localStorage.setItem('survey_draft', JSON.stringify({ step, responses, uName }));
+  localStorage.setItem(lsPrefix + 'survey_draft', JSON.stringify({ step, responses, uName }));
 }
 
-function clearDraft() { localStorage.removeItem('survey_draft'); }
+function clearDraft() { localStorage.removeItem(lsPrefix + 'survey_draft'); }
 
 function nextQ() {
   if (step >= Qs.length) { finalize(); return; }
@@ -1499,7 +1502,7 @@ function saveEdit(k) {
 
 // ─── DRAFT RESTORE ────────────────────────────────────────────────────────────
 function checkDraft() {
-  const raw = localStorage.getItem('survey_draft');
+  const raw = localStorage.getItem(lsPrefix + 'survey_draft');
   if (!raw) return;
   try {
     const d = JSON.parse(raw);
@@ -1531,7 +1534,7 @@ function checkDraft() {
 function startSurveyAfterIdentity() {
   if (started) return;
   started = true;
-  const hasDraft = !!localStorage.getItem('survey_draft');
+  const hasDraft = !!localStorage.getItem(lsPrefix + 'survey_draft');
   if (hasDraft) {
     checkDraft();
   } else if (identifiedName) {
@@ -1547,6 +1550,7 @@ function startSurveyAfterIdentity() {
 function initMagicLink() {
   const token = new URLSearchParams(window.location.search).get('p');
   if (!token || !tokenMap[token]) return;
+  lsPrefix = token + '_';  // isolate this participant's votes/comments from other users
   const fullName = tokenMap[token];
   const firstName = fullName.split(' ')[0];
   const banner = document.getElementById('magic-banner');
