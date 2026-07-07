@@ -6,6 +6,7 @@
   <title>Bright Minds: Bioscience & Medtech Innovation · July 15</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
   <style>
     :root {
       --cream:       #F4EFE5;
@@ -514,18 +515,33 @@
     .footer-right a { color: rgba(255,255,255,0.3); text-decoration: none; }
     .footer-right a:hover { color: rgba(255,255,255,0.6); }
 
+    /* Nav CTA: full text hidden on mobile */
+    .nav-cta-short { display: none; }
+
     /* ─── RESPONSIVE ─── */
     @media (max-width: 720px) {
       nav { padding: 0 20px; }
       .nav-links { display: none; }
+      .nav-cta-full { display: none; }
+      .nav-cta-short { display: inline; }
       .hero { padding: 120px 24px 72px; }
       .section { padding: 56px 24px; }
       .pull-quote-section { padding: 56px 24px; }
+      .pull-quote-mark { font-size: 48px; }
       .chapter-header { grid-template-columns: 1fr; gap: 20px; }
       .connections { grid-template-columns: 1fr; }
       .hero-sep { display: none; }
       footer { flex-direction: column; }
       .step-item { grid-template-columns: 40px 1fr; gap: 0 16px; }
+      .chat-msgs { padding: 20px 16px; }
+      .draft-banner { flex-direction: column; align-items: flex-start; gap: 10px; }
+      .draft-banner > div { flex-shrink: unset; }
+      .completion-title { font-size: 22px; }
+      .resp-item { padding-right: 16px; }
+      .resp-edit-btn { position: static; display: block; margin-top: 8px; }
+      .vote-btn { padding: 5px 10px; min-height: 36px; }
+      .claim-row { flex-direction: column; align-items: stretch; }
+      .claim-select { min-width: unset; }
     }
   </style>
 </head>
@@ -543,7 +559,7 @@
     <a class="nav-link" href="#themes">Topics</a>
     <a class="nav-link" href="#room">The Room</a>
   </div>
-  <a class="nav-cta" href="#survey">Share Your Perspective →</a>
+  <a class="nav-cta" href="#survey"><span class="nav-cta-full">Share Your Perspective →</span><span class="nav-cta-short">Respond →</span></a>
 </nav>
 
 <!-- ─── HERO ─── -->
@@ -638,6 +654,26 @@
       <div class="section-eyebrow">Step 1</div>
       <div class="section-title">Share Your Perspective</div>
       <p class="section-desc">Six questions, about seven minutes. Your answers shape how we design the session and who you'll connect with.</p>
+
+      <!-- Magic link identity banner -->
+      <div id="magic-banner" style="display:none;background:var(--ink);border-radius:4px;padding:32px 28px;margin-bottom:16px;text-align:center;color:var(--white);">
+        <p style="font-size:10px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-bottom:10px">Personalized Invitation</p>
+        <p id="magic-greeting" style="font-family:'DM Serif Display',serif;font-size:26px;font-weight:400;color:var(--white);margin-bottom:8px;"></p>
+        <p id="magic-full-name" style="font-size:13px;color:rgba(255,255,255,0.4);margin-bottom:24px;"></p>
+        <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+          <button id="magic-yes" class="btn btn-dark" style="min-width:140px;background:var(--accent)">Yes, that's me →</button>
+          <button id="magic-no" class="btn btn-outline" style="min-width:140px;color:rgba(255,255,255,0.5);border-color:rgba(255,255,255,0.15)!important">Not me</button>
+        </div>
+        <div id="magic-other-form" style="display:none;margin-top:24px;border-top:1px solid rgba(255,255,255,0.1);padding-top:20px;">
+          <p style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:14px">Enter your name to continue:</p>
+          <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:12px">
+            <input id="magic-other-input" type="text" placeholder="Your full name"
+              style="flex:1;min-width:200px;max-width:280px;font-family:inherit;font-size:13px;color:var(--ink);border:1px solid var(--border);border-radius:3px;padding:10px 14px;background:var(--white);outline:none;">
+            <button id="magic-other-confirm" class="btn btn-dark" style="background:var(--accent)">Continue</button>
+          </div>
+          <p style="font-size:12px;color:rgba(255,255,255,0.3);font-style:italic;max-width:380px;margin:0 auto">Your responses will be recorded but won't appear in The Room until the organizers confirm you.</p>
+        </div>
+      </div>
 
       <div class="draft-banner" id="draft-banner">
         <span>You have a saved draft — want to pick up where you left off?</span>
@@ -774,7 +810,7 @@
   <div class="section-inner">
     <div class="section-eyebrow">Step 3 · The Room</div>
     <div class="section-title">Who You'll Be In Conversation With</div>
-    <p class="section-desc">Fifteen people. Click any name to read more. Complete Step 1 and link your profile — your introduction will appear here for everyone else.</p>
+    <p class="section-desc">FZteen people. Click any name to read more. Complete Step 1 and link your profile — your introduction will appear here for everyone else.</p>
 
     <div class="cluster-block">
       <div class="cluster-header">
@@ -795,7 +831,7 @@
     <div class="cluster-block">
       <div class="cluster-header">
         <span class="cluster-num">II.</span>
-        <span class="cluster-name">Capital &amp; Commercialization — Funding, Payers &amp; Market Access</span>
+        <span class="cluster-name">Capital &amp; Commercialization ─�� Funding, Payers &amp; Market Access</span>
       </div>
       <div id="cluster-b"></div>
     </div>
@@ -813,7 +849,7 @@
 <!-- ─── FOOTER ─── -->
 <footer>
   <div class="footer-left">
-    Organized by <strong>Nadine Afari</strong> (Rady Children's · UC Irvine · Together.Health)
+    Organized by <strong>Nadine Afari</strong> (Rady Children's · UC Svine · Together.Health)
     and <strong>Rami</strong> (The Garage)
   </div>
   <div class="footer-right">
@@ -822,8 +858,25 @@
 </footer>
 
 <script>
-// ─── CONFIG ───────────────────────────────────────────────────────────────────
-const FORMSPREE_ENDPOINT = 'https://formspree.io/f/YOUR_FORM_ID';
+// ─── SUPABASE ─────────────────────────────────────────────────────────────────
+const sb = supabase.createClient(
+  'https://hsnptfjumwcwhntmcpwe.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhzbnB0Zmp1bXdjd2hudG1jcHdlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMzODY4OTksImV4cCI6MjA5ODk2Mjg5OX0.fDsuXO4j1PXUhzjdS8ELqKfKvli6cVz95D4Xos1e8RA'
+);
+
+// ─── TOKEN MAP ────────────────────────────────────────────────────────────────
+const tokenMap = {
+  'na8x2': 'Nadine Afari',     'ra4k1': 'Rami',
+  'rd7m3': 'Rachel Dixon',     'gz2p5': 'Greg Zapotoczny, PhD',
+  'lm9q7': 'Larissa May, MD',  'ls3h4': 'Lois Sayrs, PhD',
+  'gs6w9': 'Gunjan Siroya',    'hm1n6': 'Helen McBride, PhD',
+  'kk5r8': 'Karin Koch',       'ar2y3': 'Amir Rahimi, PhD',
+  'jy7k2': 'John Younger, MD', 'ps4t6': 'Prashant Samant',
+  'rs8b1': 'Rasu Shrestha, MD, MBA', 'fs3v7': 'Frank Sawyer',
+  'sh6m4': 'Stefany Y. Holguin, PhD'
+};
+let identifiedName = null;
+let isPendingUser = false;
 
 // ─── PARTICIPANTS ─────────────────────────────────────────────────────────────
 const participants = [
@@ -937,9 +990,9 @@ const participants = [
 // ─── TOPICS DATA ──────────────────────────────────────────────────────────────
 const topicsData = {
   ch01: [
-    { id:'hs1', text:'What emerging healthcare innovation and clinical research areas are currently underrecognized but could become high value within the next 5–10 years?', cat:'Horizon Scanning' },
+    { id:'as1', text:'What emerging healthcare innovation and clinical research areas are currently underrecognized but could become high value within the next 5–10 years?', cat:'Horizon Scanning' },
     { id:'hs2', text:'What signals or methods have proven most reliable for spotting emerging opportunities before they become obvious?', cat:'Horizon Scanning' },
-    { id:'hs3', text:'How should we structure a convening of top researchers across domains to surface underrecognized areas most effectively?', cat:'Horizon Scanning' },
+    { id:'as3', text:'How should we structure a convening of top researchers across domains to surface underrecognized areas most effectively?', cat:'Horizon Scanning' },
     { id:'tc1', text:'Where does translation from science to real-world products most often break down, and why?', cat:'Translational Capabilities' },
     { id:'tc2', text:'What capabilities are still missing in the broader ecosystem to make translation faster and more reliable?', cat:'Translational Capabilities' }
   ],
@@ -1049,6 +1102,9 @@ function renderTopics() {
 
 // ─── RENDER PROFILES ─────────────────────────────────────────────────────────
 function getSavedSurvey(name) {
+  // Supabase data takes priority (shared across all visitors)
+  if (window._surveyMap && window._surveyMap[name]) return window._surveyMap[name];
+  // Fallback: localStorage (for current visitor's just-submitted data before next page load)
   try { return JSON.parse(localStorage.getItem('profile_' + name) || 'null'); }
   catch(e) { return null; }
 }
@@ -1057,6 +1113,7 @@ function renderProfiles() {
   ['host','a','b','c'].forEach(cl => {
     const el = document.getElementById('cluster-' + cl);
     if (!el) return;
+    el.innerHTML = ''; // clear before re-render
     participants.filter(p => p.cluster === cl).forEach(p => {
       const saved = getSavedSurvey(p.name);
       const row = document.createElement('div');
@@ -1232,29 +1289,50 @@ function matchReason(p) {
   return `Overlap on ${hit.charAt(0).toUpperCase() + hit.slice(1)}. ${p.tags[0]}.`;
 }
 
-// ─── FORMSPREE ────────────────────────────────────────────────────────────────
-async function submitToFormspree() {
-  if (!FORMSPREE_ENDPOINT.includes('YOUR_FORM_ID')) {
-    try {
-      await fetch(FORMSPREE_ENDPOINT, {
-        method:'POST',
-        headers:{ 'Accept':'application/json','Content-Type':'application/json' },
-        body: JSON.stringify({ name: responses.name, ...responses })
-      });
-    } catch(e) { console.warn('Formspree submission failed:', e); }
+// ─── SUPABASE SUBMIT ──────────────────────────────────────────────────────────
+async function submitToSupabase(claimedName) {
+  const name = claimedName || responses.name;
+  if (!name) return;
+  try {
+    const { error } = await sb.from('survey_responses').insert({
+      participant_name: name,
+      q1: responses.q1 || '', q2: responses.q2 || '',
+      q3: responses.q3 || '', q4: responses.q4 || '',
+      q5: responses.q5 || '', q6: responses.q6 || '',
+      status: isPendingUser ? 'pending' : 'submitted'
+    });
+    if (error) throw error;
+    // Update in-memory map immediately for instant display
+    if (!isPendingUser) {
+      window._surveyMap = window._surveyMap || {};
+      window._surveyMap[name] = {
+        participant_name: name,
+        q1: responses.q1, q4: responses.q4, q6: responses.q6
+      };
+    }
+  } catch(e) {
+    console.warn('Supabase submit failed, saving to localStorage:', e.message);
+    if (!isPendingUser) {
+      localStorage.setItem('profile_' + name, JSON.stringify(responses));
+    }
   }
 }
 
 // ─── FINALIZE ─────────────────────────────────────────────────────────────────
 function finalize() {
   showTyping();
-  setTimeout(() => {
+  setTimeout(async () => {
     hideTyping();
     addMsg(`That's everything, ${uName}. Scroll down to see your responses and your suggested connections for July 15.`, 'bot');
     inputEl.disabled = true; sendEl.disabled = true;
     inputEl.placeholder = '—';
     clearDraft();
-    submitToFormspree();
+
+    // Auto-submit for magic-link users (we have their exact profile name)
+    if (identifiedName) {
+      await submitToSupabase(identifiedName);
+      renderProfiles(); // update The Room immediately
+    }
 
     const comp = document.getElementById('completion');
     document.getElementById('comp-title').textContent = `Thank you, ${uName}.`;
@@ -1297,6 +1375,16 @@ function finalize() {
       opt.value = p.name; opt.textContent = p.name;
       sel.appendChild(opt);
     });
+    // Auto-select from magic link
+    if (identifiedName && !isPendingUser) { sel.value = identifiedName; }
+
+    // Pending write-in: replace claim section with confirmation
+    if (isPendingUser) {
+      document.querySelector('.claim-section').innerHTML = `
+        <div class="comp-section-label">Your profile</div>
+        <p class="claim-desc">Your responses have been recorded. The organizers will review and add you to The Room before the call.</p>
+        <p class="claim-confirmed show" style="display:block;margin-top:4px">✓ Responses recorded.</p>`;
+    }
 
     comp.classList.add('show');
 
@@ -1315,15 +1403,32 @@ function finalize() {
         setTimeout(() => { btn.textContent = 'Copy to Clipboard'; }, 2000);
       });
     };
-    document.getElementById('claim-btn').onclick = () => {
-      const sel = document.getElementById('profile-select');
-      const name = sel.value;
-      if (!name) { sel.style.borderColor = 'var(--accent)'; return; }
-      localStorage.setItem('profile_' + name, JSON.stringify(responses));
-      document.getElementById('claim-confirmed').classList.add('show');
-      document.getElementById('claim-btn').disabled = true;
-      renderProfiles(); // refresh profile cards
-    };
+    if (!isPendingUser) {
+      document.getElementById('claim-btn').onclick = async () => {
+        const sel = document.getElementById('profile-select');
+        const name = sel.value;
+        if (!name) { sel.style.borderColor = 'var(--accent)'; return; }
+        // Save locally for instant feedback
+        localStorage.setItem('profile_' + name, JSON.stringify(responses));
+        // Submit to Supabase (for non-magic-link users who haven't submitted yet)
+        if (!identifiedName) { await submitToSupabase(name); }
+        document.getElementById('claim-confirmed').classList.add('show');
+        document.getElementById('claim-btn').disabled = true;
+        renderProfiles();
+        // Scroll to The Room and open their profile
+        setTimeout(() => {
+          document.getElementById('room').scrollIntoView({ behavior:'smooth', block:'start' });
+          setTimeout(() => {
+            document.querySelectorAll('.profile-row').forEach(row => {
+              if (row.querySelector('.p-name')?.textContent === name) {
+                row.classList.add('open');
+                row.scrollIntoView({ behavior:'smooth', block:'center' });
+              }
+            });
+          }, 700);
+        }, 500);
+      };
+    }
 
     setTimeout(() => comp.scrollIntoView({ behavior:'smooth', block:'start' }), 300);
   }, 1000);
@@ -1375,24 +1480,88 @@ function checkDraft() {
   } catch(e) { nextQ(); }
 }
 
+// ─── MAGIC LINK & IDENTITY ────────────────────────────────────────────────────
+function startSurveyAfterIdentity() {
+  if (started) return;
+  started = true;
+  const hasDraft = !!localStorage.getItem('survey_draft');
+  if (hasDraft) {
+    checkDraft();
+  } else if (identifiedName) {
+    // Skip name question — we already know who they are
+    step = 1; uName = identifiedName.split(' ')[0]; responses.name = identifiedName;
+    setProgress(1, Qs.length);
+    setTimeout(nextQ, 500);
+  } else {
+    setTimeout(nextQ, 500);
+  }
+}
+
+function initMagicLink() {
+  const token = new URLSearchParams(window.location.search).get('p');
+  if (!token || !tokenMap[token]) return;
+  const fullName = tokenMap[token];
+  const firstName = fullName.split(' ')[0];
+  const banner = document.getElementById('magic-banner');
+  document.getElementById('magic-greeting').textContent = 'Are you ' + firstName + '?';
+  document.getElementById('magic-full-name').textContent = fullName;
+  banner.style.display = 'block';
+  window._magicPending = true;
+
+  document.getElementById('magic-yes').onclick = () => {
+    identifiedName = fullName;
+    banner.style.display = 'none';
+    window._magicPending = false;
+    startSurveyAfterIdentity();
+  };
+  document.getElementById('magic-no').onclick = () => {
+    document.getElementById('magic-other-form').style.display = 'block';
+    document.getElementById('magic-yes').style.display = 'none';
+    document.getElementById('magic-no').style.display = 'none';
+  };
+  document.getElementById('magic-other-confirm').onclick = () => {
+    const entered = document.getElementById('magic-other-input').value.trim();
+    if (!entered) { document.getElementById('magic-other-input').style.borderColor = 'var(--accent)'; return; }
+    identifiedName = entered;
+    isPendingUser = true;
+    banner.style.display = 'none';
+    window._magicPending = false;
+    startSurveyAfterIdentity();
+  };
+  document.getElementById('magic-other-input').addEventListener('keydown', e => {
+    if (e.key === 'Enter') document.getElementById('magic-other-confirm').click();
+  });
+}
+
 // ─── INIT ─────────────────────────────────────────────────────────────────────
-renderProfiles();
+let started = false;
 renderTopics();
 
 inputEl.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); } });
 inputEl.addEventListener('input', () => { inputEl.style.height = 'auto'; inputEl.style.height = Math.min(inputEl.scrollHeight, 120) + 'px'; });
 sendEl.addEventListener('click', send);
 
-// Auto-start when survey scrolls into view
-let started = false;
-new IntersectionObserver(entries => {
-  if (entries[0].isIntersecting && !started) {
-    started = true;
-    const hasDraft = !!localStorage.getItem('survey_draft');
-    if (hasDraft) { checkDraft(); }
-    else { setTimeout(nextQ, 500); }
+(async () => {
+  // Load survey responses from Supabase → populate The Room for all visitors
+  window._surveyMap = {};
+  try {
+    const { data } = await sb.from('survey_responses')
+      .select('participant_name,q1,q4,q6')
+      .eq('status', 'submitted');
+    (data || []).forEach(r => { window._surveyMap[r.participant_name] = r; });
+  } catch(e) {
+    console.warn('Could not load Supabase data (table may not exist yet):', e.message);
   }
-}, { threshold: 0.25 }).observe(document.getElementById('survey'));
+  renderProfiles();
+  initMagicLink();
+
+  new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting && !started) {
+      if (window._magicPending) return; // wait for identity confirmation
+      startSurveyAfterIdentity();
+    }
+  }, { threshold: 0.25 }).observe(document.getElementById('survey'));
+})();
 </script>
 </body>
 </html>
