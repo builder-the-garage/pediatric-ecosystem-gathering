@@ -206,13 +206,13 @@
     .cluster-num { font-family: 'DM Serif Display', serif; font-size: 13px; color: var(--accent); font-style: italic; }
     .cluster-name { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mid); }
     .profile-row {
-      display: grid; grid-template-columns: 36px 1fr auto;
+      display: grid; grid-template-columns: 36px 1fr;
       align-items: start; gap: 0 16px;
       padding: 18px 0; border-bottom: 1px solid var(--border);
       cursor: pointer; transition: background 0.12s;
     }
-    .profile-row:hover { background: rgba(184,92,56,0.03); }
-    .profile-row.open { background: var(--accent-pale); }
+    .profile-row:hover { background: rgba(0,0,0,0.02); }
+    .profile-row.open { background: var(--cream-dark); }
     .p-av {
       width: 36px; height: 36px; border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
@@ -230,11 +230,11 @@
       color: var(--mid); background: var(--cream); border: 1px solid var(--border);
       padding: 2px 8px; border-radius: 2px;
     }
-    .profile-row.open .p-tag { background: rgba(184,92,56,0.08); border-color: rgba(184,92,56,0.2); color: var(--accent); }
-    .p-arrow { font-size: 12px; color: var(--border); margin-top: 6px; transition: transform 0.2s; user-select: none; }
-    .profile-row.open .p-arrow { transform: rotate(90deg); color: var(--accent); }
+    .profile-row.open .p-tag { background: var(--cream); }
+    .p-expand-hint { font-size: 10px; color: var(--border); letter-spacing: 0.06em; margin-top: 7px; user-select: none; }
+    .profile-row.open .p-expand-hint { display: none; }
     .p-bio {
-      display: none; grid-column: 2 / 4; font-size: 13px; color: var(--mid);
+      display: none; font-size: 13px; color: var(--mid);
       line-height: 1.7; padding: 10px 0 4px;
       border-top: 1px dashed var(--border); margin-top: 10px;
     }
@@ -1177,7 +1177,7 @@ function renderProfiles() {
     participants.filter(p => p.cluster === cl).forEach(p => {
       const saved = getSavedSurvey(p.name);
       const row = document.createElement('div');
-      row.className = 'profile-row open';
+      row.className = 'profile-row';
 
       let surveyHtml = '';
       if (saved) {
@@ -1197,9 +1197,9 @@ function renderProfiles() {
           <div class="p-name">${p.name}${p.li ? `<a class="p-li" href="${p.li}" target="_blank" rel="noopener" title="LinkedIn" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>` : ''}</div>
           <div class="p-org">${p.org}${p.role ? ' · ' + p.role : ''}</div>
           <div class="p-tags">${p.tags.map(t=>`<span class="p-tag">${t}</span>`).join('')}${saved ? '<span class="p-tag" style="background:rgba(184,92,56,0.1);border-color:rgba(184,92,56,0.3);color:var(--accent)">Responded ✓</span>' : ''}</div>
+          <div class="p-expand-hint">click to expand</div>
           <div class="p-bio">${p.bio}${surveyHtml}</div>
         </div>
-        <div class="p-arrow">›</div>
       `;
       row.addEventListener('click', () => {
         row.classList.toggle('open');
