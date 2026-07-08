@@ -588,7 +588,7 @@
     <div class="hero-sep"></div>
     <div class="hero-detail">
       <div class="hero-detail-label">Participants</div>
-      <div class="hero-detail-value">~15 by invitation</div>
+      <div class="hero-detail-value">By invitation only</div>
     </div>
   </div>
   <div class="hosts-line" style="margin-top: 28px;">
@@ -807,7 +807,7 @@
   <div class="section-inner">
     <div class="section-eyebrow">Step 3 · The Room</div>
     <div class="section-title">Who You'll Be In Conversation With</div>
-    <p class="section-desc">Fifteen people. Click any name to read more. Complete Step 1 and link your profile, your introduction will appear here for everyone else.</p>
+    <p class="section-desc">An invitation-only group. Click any name to read more. Complete Step 1 and link your profile, your introduction will appear here for everyone else.</p>
 
     <div class="cluster-block">
       <div class="cluster-header">
@@ -1394,7 +1394,7 @@ async function submitToSupabase(claimedName) {
       window._surveyMap = window._surveyMap || {};
       window._surveyMap[name] = {
         participant_name: name,
-        q1: responses.q1, q4: responses.q4, q6: responses.q6
+        q1: responses.q1, q2: responses.q2, q3: responses.q3, q4: responses.q4, q5: responses.q5, q6: responses.q6
       };
       // Always cache locally — if Supabase SELECT is blocked on next load (e.g. RLS),
       // the localStorage fallback in getSavedSurvey will still show the card responses
