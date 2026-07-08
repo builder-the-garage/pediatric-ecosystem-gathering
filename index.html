@@ -1044,7 +1044,7 @@ function castVote(topicId, direction, btn) {
   } else {
     localStorage.setItem(lsPrefix + 'vote_' + topicId, direction);
     const name = currentUserName() || _tok;
-    sb.from('votes').insert({ topic_id: topicId, chapter: ch, participant_name: name, value: direction === 'up' ? 1 : -1 }).then(({error}) => { if(error) console.error('vote insert:', error); });
+    sb.from('step 2: topic votes').insert({ topic_id: topicId, chapter: ch, participant_name: name, value: direction === 'up' ? 1 : -1 }).then(({error}) => { if(error) console.error('vote insert:', error); });
   }
   renderTopics();
 }
@@ -1057,7 +1057,7 @@ function saveComment(topicId, text) {
   comments.push({ text: text.trim(), name });
   localStorage.setItem(lsPrefix + 'comments_' + topicId, JSON.stringify(comments));
   const nameOrToken = name || _tok;
-  sb.from('comments').insert({ topic_id: topicId, text: text.trim(), participant_name: nameOrToken }).then(({error}) => { if(error) console.error('comment insert:', error); });
+  sb.from('step 1: (b) comments').insert({ topic_id: topicId, text: text.trim(), participant_name: nameOrToken }).then(({error}) => { if(error) console.error('comment insert:', error); });
   renderTopics();
 }
 
@@ -1326,7 +1326,7 @@ async function submitToSupabase(claimedName) {
   const name = claimedName || responses.name;
   if (!name) return;
   try {
-    const { error } = await sb.from('survey_responses').insert({
+    const { error } = await sb.from('step 1: (a) user responses').insert({
       participant_name: name,
       q1: responses.q1 || '', q2: responses.q2 || '',
       q3: responses.q3 || '', q4: responses.q4 || '',
@@ -1471,7 +1471,6 @@ function finalize() {
         if (!identifiedName) { await submitToSupabase(name); }
         document.getElementById('claim-confirmed').classList.add('show');
         document.getElementById('claim-btn').disabled = true;
-      'claim-btn').disabled = true;
         renderProfiles();
         // Scroll to The Room and open their profile
         setTimeout(() => {
