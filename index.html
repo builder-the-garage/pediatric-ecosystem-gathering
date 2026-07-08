@@ -1383,23 +1383,28 @@ async function submitToSupabase(claimedName) {
 }
 
 // ─── FINALIZE ─────────────────────────────────────────────────────────────────
-function finalize() {
-  showTyping();
+function finalize(isReturn = false) {
+  if (!isReturn) showTyping();
   setTimeout(async () => {
-    hideTyping();
-    addMsg(`That's everything, ${uName}. Scroll down to see your responses and your suggested connections for July 15.`, 'bot');
+    if (!isReturn) hideTyping();
+    addMsg(
+      isReturn
+        ? `Welcome back, ${uName}. Here are your responses — you can review or edit them below.`
+        : `That's everything, ${uName}. Here are your responses and your suggested connections for July 15.`,
+      'bot'
+    );
     inputEl.disabled = true; sendEl.disabled = true;
     inputEl.placeholder = '—';
-    clearDraft();
+    if (!isReturn) clearDraft();
 
-    // Auto-submit for magic-link users (we have their exact profile name)
-    if (identifiedName) {
+    // Submit to Supabase on first completion only (not on return visits)
+    if (!isReturn && identifiedName) {
       await submitToSupabase(identifiedName);
-      renderProfiles(); // update The Room immediately
+      renderProfiles();
     }
 
     const comp = document.getElementById('completion');
-    document.getElementById('comp-title').textContent = `Thank you, ${uName}.`;
+    document.getElementById('comp-title').textContent = isReturn ? `Welcome back, ${uName}.` : `Thank you, ${uName}.`;
 
     // Connections
     const matches = matchParticipants();
@@ -1432,32 +1437,32 @@ function finalize() {
       respEl.appendChild(d);
     });
 
-    // Populate profile claim dropdown
-    const sel = document.getElementById('profile-select');
-    participants.forEach(p => {
-      const opt = document.createElement('option');
-      opt.value = p.name; opt.textContent = p.name;
-      sel.appendChild(opt);
-    });
-    // Auto-select from magic link
-    if (identifiedName && !isPendingUser) { sel.value = identifiedName; }
-
-    // Pending write-in: replace claim section with confirmation
-    if (isPendingUser) {
+    // Claim section — hide for identified magic-link users (submit already handled above)
+    if (identifiedName && !isPendingUser) {
+      document.querySelector('.claim-section').style.display = 'none';
+    } else if (isPendingUser) {
       document.querySelector('.claim-section').innerHTML = `
         <div class="comp-section-label">Your profile</div>
         <p class="claim-desc">Your responses have been recorded. The organizers will review and add you to The Room before the call.</p>
         <p class="claim-confirmed show" style="display:block;margin-top:4px">✓ Responses recorded.</p>`;
+    } else {
+      // Anonymous user — show claim dropdown
+      const sel = document.getElementById('profile-select');
+      participants.forEach(p => {
+        const opt = document.createElement('option');
+        opt.value = p.name; opt.textContent = p.name;
+        sel.appendChild(opt);
+      });
     }
 
     comp.classList.add('show');
 
-    document.getElementById('publish-btn').onclick = async () => {
-      const btn = document.getElementById('publish-btn');
-      btn.disabled = true;
+    const publishBtn = document.getElementById('publish-btn');
+    if (isReturn) publishBtn.textContent = 'View in The Room →';
+    publishBtn.onclick = async () => {
+      publishBtn.disabled = true;
       if (identifiedName && !isPendingUser) {
-        // Magic-link user,already submitted, scroll to their profile
-        btn.textContent = '✓ Published';
+        publishBtn.textContent = isReturn ? '→ Going there' : '✓ Published';
         renderProfiles();
         setTimeout(() => {
           document.getElementById('room').scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -1475,11 +1480,11 @@ function finalize() {
         if (!sel.value) {
           sel.style.borderColor = 'var(--accent)';
           sel.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          btn.disabled = false;
+          publishBtn.disabled = false;
           return;
         }
         document.getElementById('claim-btn').click();
-        btn.textContent = '✓ Published';
+        publishBtn.textContent = '✓ Published';
       }
     };
     document.getElementById('copy-btn').onclick = () => {
@@ -1492,19 +1497,16 @@ function finalize() {
         setTimeout(() => { btn.textContent = 'Copy to Clipboard'; }, 2000);
       });
     };
-    if (!isPendingUser) {
+    if (!isPendingUser && !identifiedName) {
       document.getElementById('claim-btn').onclick = async () => {
         const sel = document.getElementById('profile-select');
         const name = sel.value;
         if (!name) { sel.style.borderColor = 'var(--accent)'; return; }
-        // Save locally for instant feedback
         localStorage.setItem('profile_' + name, JSON.stringify(responses));
-        // Submit to Supabase (for non-magic-link users who haven't submitted yet)
-        if (!identifiedName) { await submitToSupabase(name); }
+        await submitToSupabase(name);
         document.getElementById('claim-confirmed').classList.add('show');
         document.getElementById('claim-btn').disabled = true;
         renderProfiles();
-        // Scroll to The Room and open their profile
         setTimeout(() => {
           document.getElementById('room').scrollIntoView({ behavior:'smooth', block:'start' });
           setTimeout(() => {
@@ -1519,8 +1521,11 @@ function finalize() {
       };
     }
 
-    setTimeout(() => comp.scrollIntoView({ behavior:'smooth', block:'start' }), 300);
-  }, 1000);
+    // Scroll to completion panel on first submit; return visitors stay put
+    if (!isReturn) {
+      setTimeout(() => comp.scrollIntoView({ behavior:'smooth', block:'start' }), 300);
+    }
+  }, isReturn ? 0 : 1000);
 }
 
 function toggleEdit(k) {
@@ -1542,30 +1547,19 @@ function saveEdit(k) {
 // ─── DRAFT RESTORE ────────────────────────────────────────────────────────────
 function checkDraft() {
   const raw = localStorage.getItem(lsPrefix + 'survey_draft');
-  if (!raw) return;
+  if (!raw) { nextQ(); return; }
   try {
     const d = JSON.parse(raw);
-    if (!d.step || d.step < 1) return;
-    const banner = document.getElementById('draft-banner');
-    banner.classList.add('show');
-    document.getElementById('draft-restore').onclick = () => {
-      banner.style.display = 'none';
-      step = d.step; responses = d.responses || {}; uName = d.uName || '';
-      // replay completed messages
-      if (responses.name) addMsg(Qs[0].msg, 'bot'), addMsg(responses.name, 'user');
-      if (responses.q1) {
-        addMsg(typeof Qs[1].msg === 'function' ? Qs[1].msg(uName) : Qs[1].msg, 'bot');
-        addMsg(responses.q1, 'user');
-      }
-      // just jump to current step
-      setProgress(step, Qs.length);
-      nextQ();
-    };
-    document.getElementById('draft-discard').onclick = () => {
-      clearDraft();
-      banner.style.display = 'none';
-      nextQ();
-    };
+    if (!d.step || d.step < 1) { nextQ(); return; }
+    // Auto-restore silently — pick up where they left off
+    step = d.step; responses = d.responses || {}; uName = d.uName || '';
+    if (responses.name) addMsg(Qs[0].msg, 'bot'), addMsg(responses.name, 'user');
+    if (responses.q1) {
+      addMsg(typeof Qs[1].msg === 'function' ? Qs[1].msg(uName) : Qs[1].msg, 'bot');
+      addMsg(responses.q1, 'user');
+    }
+    setProgress(step, Qs.length);
+    nextQ();
   } catch(e) { nextQ(); }
 }
 
@@ -1579,10 +1573,19 @@ function startSurveyAfterIdentity() {
     !!localStorage.getItem('profile_' + identifiedName)
   );
   if (alreadySubmitted) {
-    // Already submitted — show a short acknowledgment, don't restart the survey
     uName = identifiedName.split(' ')[0];
-    addMsg(`Welcome back, ${uName}. Your responses are already in — you can see them on your card in The Room below. See you July 15.`, 'bot');
-    inputEl.disabled = true; sendEl.disabled = true; inputEl.placeholder = '—';
+    // Restore full responses from localStorage (written on submit)
+    try {
+      const stored = JSON.parse(localStorage.getItem('profile_' + identifiedName) || 'null');
+      if (stored) responses = { ...stored };
+    } catch(e) {}
+    // Fall back to whatever Supabase loaded
+    if (!responses.name && window._surveyMap?.[identifiedName]) {
+      const m = window._surveyMap[identifiedName];
+      responses = { name: identifiedName, q1: m.q1 || '', q4: m.q4 || '', q6: m.q6 || '' };
+    }
+    if (!responses.name) responses.name = identifiedName;
+    finalize(true); // show completion panel without re-submitting
   } else if (hasDraft) {
     checkDraft();
   } else if (identifiedName) {
