@@ -883,7 +883,7 @@ const sb = supabase.createClient(
 
 // ─── TOKEN MAP ────────────────────────────────────────────────────────────────
 const tokenMap = {
-  'na8x2': 'Nadine Afari',     'ra4k1': 'Rami',
+  'na8x2': 'Nadine Afari',     'ra4k1': 'Rami Ajjuri, PhD MBA',
   'lm4x8': 'Luis Martínez, Ph.D.', 'cg2t5': 'Carlos Gutierrez',
   'am7r6': 'Andrew Moomey, MBA',   'hm1n6': 'Helen McBride, PhD',
   'rd7m3': 'Rachel Dixon',     'gz2p5': 'Greg Zapotoczny, PhD',
@@ -910,11 +910,11 @@ const participants = [
     li:"https://www.linkedin.com/in/nadineba/"
   },
   {
-    name:"Rami", org:"The Garage", role:"Co-Host",
+    name:"Rami Ajjuri, PhD MBA", org:"the.garage", role:"Co-Host",
     i:"RA", c:"#555048", cluster:"host",
     tags:["Innovation Ecosystems","Venture Building","Community Design"],
     kw:["startup","innovation","venture","ecosystem","build","community","founder"],
-    bio:"Building The Garage as a platform for bringing together innovators, founders, and institutions to tackle hard problems worth solving. Co-host of this gathering and focused on making the hour count.",
+    bio:"Building the.garage as a platform for bringing together innovators, founders, and institutions to tackle hard problems worth solving. Co-host of this gathering and focused on making the hour count.",
     li:"https://www.linkedin.com/in/rami-ajjuri-phd-mba-b8065241/"
   },
   {
@@ -1006,7 +1006,7 @@ const participants = [
     li:"https://www.linkedin.com/in/rasushrestha"
   },
   {
-    name:"Amit Rushi", org:"Ecosystem Strategist", role:"Invited",
+    name:"Amit Rushi", org:"Ecosystem Strategist", role:"",
     i:"AR", c:"#2E6B8A", cluster:"c",
     tags:["Ecosystem Architecture","Infrastructure","Community & Scale"],
     kw:["ecosystem","infrastructure","community","scale","innovation","network","hub","strategy","build"],
@@ -1177,7 +1177,7 @@ function renderProfiles() {
     participants.filter(p => p.cluster === cl).forEach(p => {
       const saved = getSavedSurvey(p.name);
       const row = document.createElement('div');
-      row.className = 'profile-row';
+      row.className = 'profile-row open';
 
       let surveyHtml = '';
       if (saved) {
@@ -1202,9 +1202,7 @@ function renderProfiles() {
         <div class="p-arrow">›</div>
       `;
       row.addEventListener('click', () => {
-        const wasOpen = row.classList.contains('open');
-        document.querySelectorAll('.profile-row.open').forEach(r => r.classList.remove('open'));
-        if (!wasOpen) row.classList.add('open');
+        row.classList.toggle('open');
       });
       el.appendChild(row);
     });
