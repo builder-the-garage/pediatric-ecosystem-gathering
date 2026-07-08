@@ -1037,8 +1037,7 @@ const topicsData = {
 function getVoteState(id) { return localStorage.getItem(lsPrefix + 'vote_' + id) || null; }
 function getComments(id) {
   try {
-    const raw = JSON.parse(localStorage.getItem(lsPrefix + 'comments_' + id) || '[]');
-    return raw.map(c => typeof c === 'string' ? { text: c, name: '' } : c);
+    return window._commentsMap?.[id] || [];
   }
   catch(e) { return []; }
 }
@@ -1063,14 +1062,15 @@ function castVote(topicId, direction, btn) {
 
 function saveComment(topicId, text) {
   if (!text.trim()) return;
-  const comments = getComments(topicId);
-  const _tok = new URLSearchParams(window.location.search).get('p') || '';
-  const name = currentUserName();
-  comments.push({ text: text.trim(), name });
-  localStorage.setItem(lsPrefix + 'comments_' + topicId, JSON.stringify(comments));
-  const nameOrToken = name || _tok;
-  sb.from('step 1: (b) comments').insert({ topic_id: topicId, text: text.trim(), participant_name: nameOrToken }).then(({error}) => { if(error) console.error('comment insert:', error); });
+  const name = currentUserName() || (new URLSearchParams(window.location.search).get('p') || '');
+  // Optimistically add to shared map so it shows immediately
+  if (!window._commentsMap) window._commentsMap = {};
+  if (!window._commentsMap[topicId]) window._commentsMap[topicId] = [];
+  window._commentsMap[topicId].push({ text: text.trim(), name });
   renderTopics();
+  // Persist to Supabase for all visitors
+  sb.from('step 1: (b) comments').insert({ topic_id: topicId, text: text.trim(), participant_name: name })
+    .then(({error}) => { if(error) console.error('comment insert:', error); });
 }
 
 function addUserTopic(ch) {
@@ -1648,6 +1648,20 @@ sendEl.addEventListener('click', send);
     console.warn('Could not load Supabase data (table may not exist yet):', e.message);
   }
   renderProfiles();
+
+  // Load discussion comments from Supabase → visible to all visitors
+  window._commentsMap = {};
+  try {
+    const { data: commData } = await sb.from('step 1: (b) comments')
+      .select('topic_id,text,participant_name');
+    (commData || []).forEach(c => {
+      if (!window._commentsMap[c.topic_id]) window._commentsMap[c.topic_id] = [];
+      window._commentsMap[c.topic_id].push({ text: c.text, name: c.participant_name || '' });
+    });
+    renderTopics(); // re-render now that comments are loaded
+  } catch(e) {
+    console.warn('Could not load comments:', e.message);
+  }
   buildS2Hook();
   initMagicLink();
 
