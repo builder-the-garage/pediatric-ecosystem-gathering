@@ -1570,7 +1570,13 @@ function startSurveyAfterIdentity() {
   if (started) return;
   started = true;
   const hasDraft = !!localStorage.getItem(lsPrefix + 'survey_draft');
-  if (hasDraft) {
+  const alreadySubmitted = identifiedName && window._surveyMap && !!window._surveyMap[identifiedName];
+  if (alreadySubmitted) {
+    // Already submitted — show a short acknowledgment, don't restart the survey
+    uName = identifiedName.split(' ')[0];
+    addMsg(`Welcome back, ${uName}. Your responses are already in — you can see them on your card in The Room below. See you July 15.`, 'bot');
+    inputEl.disabled = true; sendEl.disabled = true; inputEl.placeholder = '—';
+  } else if (hasDraft) {
     checkDraft();
   } else if (identifiedName) {
     // Skip name question, we already know who they are
