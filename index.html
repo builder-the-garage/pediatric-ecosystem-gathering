@@ -427,17 +427,6 @@
     .chat-send-btn:disabled { color: var(--border); cursor: default; }
     .chat-send-btn svg { width: 16px; height: 16px; fill: currentColor; }
 
-    /* Draft restore banner */
-    .draft-banner {
-      display: none; background: var(--accent-pale); border: 1px solid rgba(184,92,56,0.3);
-      border-radius: 3px; padding: 14px 18px; margin-bottom: 16px;
-      font-size: 13px; color: var(--ink); display: flex;
-      align-items: center; justify-content: space-between; gap: 12px;
-    }
-    .draft-banner.show { display: flex; }
-    .draft-btn { font-family: inherit; font-size: 11px; font-weight: 600; letter-spacing: 0.05em; padding: 6px 12px; border-radius: 2px; cursor: pointer; border: none; }
-    .draft-btn-restore { background: var(--accent); color: white; }
-    .draft-btn-discard { background: none; color: var(--mid); border: 1px solid var(--border) !important; }
 
     /* ─── COMPLETION ─── */
     #completion { display: none; margin-top: 40px; }
@@ -546,9 +535,7 @@
       footer { flex-direction: column; }
       .step-item { grid-template-columns: 40px 1fr; gap: 0 16px; }
       .chat-msgs { padding: 20px 16px; }
-      .draft-banner { flex-direction: column; align-items: flex-start; gap: 10px; }
-      .draft-banner > div { flex-shrink: unset; }
-      .completion-title { font-size: 22px; }
+.completion-title { font-size: 22px; }
       .resp-item { padding-right: 16px; }
       .resp-edit-btn { position: static; display: block; margin-top: 8px; }
       .vote-btn { padding: 5px 10px; min-height: 36px; }
@@ -687,13 +674,6 @@
         </div>
       </div>
 
-      <div class="draft-banner" id="draft-banner">
-        <span>You have a saved draft, want to pick up where you left off?</span>
-        <div style="display:flex;gap:8px;flex-shrink:0">
-          <button class="draft-btn draft-btn-restore" id="draft-restore">Continue</button>
-          <button class="draft-btn draft-btn-discard" id="draft-discard" style="border:1px solid var(--border)">Start fresh</button>
-        </div>
-      </div>
 
       <div class="chat" id="chat-widget">
         <div class="chat-progress">
