@@ -1162,12 +1162,15 @@ function renderProfiles() {
 
       let surveyHtml = '';
       if (saved) {
+        const answerItems = ['q1','q2','q3','q4','q5']
+          .filter(k => saved[k])
+          .map(k => `<div class="p-answer-item"><div class="p-answer-q">${qLabels[k]}</div><div class="p-answer-a">${saved[k]}</div></div>`)
+          .join('');
         surveyHtml = `
           <div class="p-survey-answers">
             <div class="p-survey-label">In their own words</div>
             ${saved.q6 ? `<p class="p-survey-intro">"${saved.q6}"</p>` : ''}
-            ${saved.q1 ? `<div class="p-answer-item"><div class="p-answer-q">Current work &amp; biggest friction</div><div class="p-answer-a">${saved.q1}</div></div>` : ''}
-            ${saved.q4 ? `<div class="p-answer-item"><div class="p-answer-q">What they want to walk away with</div><div class="p-answer-a">${saved.q4}</div></div>` : ''}
+            ${answerItems}
             ${saved.linkedin ? `<div class="p-answer-item"><div class="p-answer-q">LinkedIn</div><div class="p-answer-a"><a href="${saved.linkedin}" target="_blank" rel="noopener" style="color:var(--accent)">${saved.linkedin}</a></div></div>` : ''}
           </div>`;
       }
@@ -1641,7 +1644,7 @@ sendEl.addEventListener('click', send);
   window._surveyMap = {};
   try {
     const { data } = await sb.from('step 1: (a) user responses')
-      .select('participant_name,q1,q4,q6,linkedin')
+      .select('participant_name,q1,q2,q3,q4,q5,q6,linkedin')
       .eq('status', 'submitted');
     (data || []).forEach(r => { window._surveyMap[r.participant_name] = r; });
   } catch(e) {
