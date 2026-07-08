@@ -453,6 +453,13 @@
     .conn-card:hover { border-color: var(--accent); }
     .conn-top { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
     .conn-av { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: white; flex-shrink: 0; }
+    .s2-hook { display: flex; align-items: center; gap: 10px; margin: 12px 0 28px; }
+    .s2-hook-avatars { display: flex; align-items: center; }
+    .s2-hook-av { width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 7px; font-weight: 700; color: white; flex-shrink: 0; margin-left: -5px; border: 1.5px solid #111; }
+    .s2-hook-av:first-child { margin-left: 0; }
+    .s2-hook-text { font-size: 12px; color: rgba(255,255,255,0.35); letter-spacing: 0.01em; }
+    .s2-hook-text a { color: rgba(255,255,255,0.35); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(255,255,255,0.15); }
+    .s2-hook-text a:hover { color: rgba(255,255,255,0.55); }
     .conn-name { font-family: 'DM Serif Display', serif; font-size: 15px; line-height: 1.2; }
     .conn-org { font-size: 11px; color: var(--mid); margin-top: 1px; }
     .conn-reason { font-size: 12px; color: var(--mid); line-height: 1.6; font-style: italic; }
@@ -737,6 +744,11 @@
     <div class="section-eyebrow">Step 2 · Three Lenses</div>
     <div class="section-title">What We're Really Here to Work On</div>
     <p class="section-desc">These aren't fixed tracks, they're starting frames. Upvote what resonates, downvote what doesn't, comment on any topic, and add what we've missed.</p>
+
+    <div class="s2-hook">
+      <div class="s2-hook-avatars" id="s2-hook-avatars"></div>
+      <span class="s2-hook-text">You're shaping this with <strong id="s2-hook-count" style="color:rgba(255,255,255,0.5)"></strong> others — <a href="#room">meet them after →</a></span>
+    </div>
 
     <!-- Chapter 01 -->
     <div class="chapter-block">
@@ -1591,6 +1603,19 @@ function initMagicLink() {
   });
 }
 
+// ─── S2 SOCIAL HOOK ───────────────────────────────────────────────────────────
+function buildS2Hook() {
+  const avatarsEl = document.getElementById('s2-hook-avatars');
+  const countEl   = document.getElementById('s2-hook-count');
+  if (!avatarsEl || !countEl || !participants || !participants.length) return;
+  const others = participants.filter(p => p.name !== identifiedName);
+  const shown  = others.slice(0, 9);
+  avatarsEl.innerHTML = shown.map(p =>
+    `<div class="s2-hook-av" style="background:${p.c}" title="${p.name}">${p.i}</div>`
+  ).join('');
+  countEl.textContent = others.length;
+}
+
 // ─── INIT ─────────────────────────────────────────────────────────────────────
 let started = false;
 renderTopics();
@@ -1611,6 +1636,7 @@ sendEl.addEventListener('click', send);
     console.warn('Could not load Supabase data (table may not exist yet):', e.message);
   }
   renderProfiles();
+  buildS2Hook();
   initMagicLink();
 
   // Suppress survey auto-start when navigating to other sections via anchor links
