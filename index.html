@@ -1471,6 +1471,7 @@ function finalize() {
         if (!identifiedName) { await submitToSupabase(name); }
         document.getElementById('claim-confirmed').classList.add('show');
         document.getElementById('claim-btn').disabled = true;
+      'claim-btn').disabled = true;
         renderProfiles();
         // Scroll to The Room and open their profile
         setTimeout(() => {
@@ -1603,7 +1604,7 @@ sendEl.addEventListener('click', send);
   // Load survey responses from Supabase → populate The Room for all visitors
   window._surveyMap = {};
   try {
-    const { data } = await sb.from('survey_responses')
+    const { data } = await sb.from('step 1: (a) user responses')
       .select('participant_name,q1,q4,q6,linkedin')
       .eq('status', 'submitted');
     (data || []).forEach(r => { window._surveyMap[r.participant_name] = r; });
