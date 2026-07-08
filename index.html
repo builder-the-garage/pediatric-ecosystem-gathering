@@ -1370,6 +1370,9 @@ async function submitToSupabase(claimedName) {
         participant_name: name,
         q1: responses.q1, q4: responses.q4, q6: responses.q6
       };
+      // Always cache locally — if Supabase SELECT is blocked on next load (e.g. RLS),
+      // the localStorage fallback in getSavedSurvey will still show the card responses
+      localStorage.setItem('profile_' + name, JSON.stringify(responses));
     }
   } catch(e) {
     console.warn('Supabase submit failed, saving to localStorage:', e.message);
@@ -1571,7 +1574,10 @@ function startSurveyAfterIdentity() {
   if (started) return;
   started = true;
   const hasDraft = !!localStorage.getItem(lsPrefix + 'survey_draft');
-  const alreadySubmitted = identifiedName && window._surveyMap && !!window._surveyMap[identifiedName];
+  const alreadySubmitted = identifiedName && (
+    (window._surveyMap && !!window._surveyMap[identifiedName]) ||
+    !!localStorage.getItem('profile_' + identifiedName)
+  );
   if (alreadySubmitted) {
     // Already submitted — show a short acknowledgment, don't restart the survey
     uName = identifiedName.split(' ')[0];
