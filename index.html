@@ -1172,7 +1172,7 @@ function addUserTopic(ch) {
   renderTopics();
 
   // Persist to Supabase so all other visitors see it on next load
-  sb.from('topics').insert({ id, chapter: ch, text, participant_name: name || null })
+  sb.from('step 1: (c) proposed topics').insert({ id, chapter: ch, text, participant_name: name || null })
     .then(({ error }) => { if (error) console.error('topic insert:', error); });
 }
 
@@ -1762,7 +1762,7 @@ sendEl.addEventListener('click', send);
   // Load user-added topics from Supabase → visible to all visitors
   window._userTopicsMap = {};
   try {
-    const { data: topicData } = await sb.from('topics')
+    const { data: topicData } = await sb.from('step 1: (c) proposed topics')
       .select('id,chapter,text,participant_name');
     (topicData || []).forEach(t => {
       if (!window._userTopicsMap[t.chapter]) window._userTopicsMap[t.chapter] = [];
