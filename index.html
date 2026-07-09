@@ -700,7 +700,7 @@
         <div class="responses-box" id="resp-box"></div>
 
         <div class="submit-row">
-          <button class="btn btn-dark" id="publish-btn">Publish to The Room</button>
+          <button class="btn btn-dark" id="publish-btn">See Your Profile in The Room →</button>
           <button class="btn btn-outline" id="copy-btn">Copy to Clipboard</button>
         </div>
 
@@ -901,11 +901,11 @@ const participants = [
     li:"https://www.linkedin.com/in/rami-ajjuri-phd-mba-b8065241/"
   },
   {
-    name:"Rachel Dixon", org:"New Frontiers Health", role:"Founder",
+    name:"Rachel Dixon", org:"Together Health", role:"Chair of International Partnerships",
     i:"RD", c:"#2B7A8A", cluster:"b",
-    tags:["Medicaid Strategy","Health Equity","Digital Health"],
-    kw:["medicaid","reimbursement","payer","equity","telehealth","underserved","coverage","access","insurance","managed care"],
-    bio:"Expert in Medicaid reimbursement strategy and digital health implementation for underserved populations. Former Together.Health collaborator. Coaches health tech companies on payer alignment, product-market fit, and Medicaid revenue.",
+    tags:["Health Equity","Digital Health Policy","Reimbursement & Sustainability"],
+    kw:["health equity","policy","reimbursement","digital health","telehealth","safety net","system transformation","eHealth","international","nonprofits","government","providers","sustainability","HIV","CDC","Medicaid"],
+    bio:"Health innovation expert focused on policy, programming, reimbursement, technology, and system transformation to advance health equity, safety net healthcare, and sustainable, impact-driven innovation. Chair of International Partnerships for Together Health, former Vice Chair of Colorado eHealth Commission and CDC Telehealth SME for HIV. Coaches governments, providers, nonprofits, and companies in the U.S. and internationally on digital health adoption, alignment, and sustainability strategy.",
     li:"https://www.linkedin.com/in/rachel-dixon1337/"
   },
   {
@@ -1530,11 +1530,11 @@ function finalize(isReturn = false) {
     comp.classList.add('show');
 
     const publishBtn = document.getElementById('publish-btn');
-    if (isReturn) publishBtn.textContent = 'View in The Room →';
+    if (isReturn) publishBtn.textContent = 'See Your Profile in The Room →';
     publishBtn.onclick = async () => {
       publishBtn.disabled = true;
       if (identifiedName && !isPendingUser) {
-        publishBtn.textContent = isReturn ? '→ Going there' : '✓ Published';
+        publishBtn.textContent = '→ Taking you there';
         renderProfiles();
         setTimeout(() => {
           document.getElementById('room').scrollIntoView({ behavior: 'smooth', block: 'start' });
