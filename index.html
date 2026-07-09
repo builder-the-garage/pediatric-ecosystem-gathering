@@ -1084,9 +1084,16 @@ function getComments(id) {
   }
   catch(e) { return []; }
 }
-function getUserTopics(ch) {
+function getLocalTopics(ch) {
   try { return JSON.parse(localStorage.getItem(lsPrefix + 'utopics_' + ch) || '[]'); }
   catch(e) { return []; }
+}
+function getUserTopics(ch) {
+  // Merge this user's localStorage topics + all visitors' Supabase topics, deduped by id
+  const local = getLocalTopics(ch);
+  const shared = window._userTopicsMap?.[ch] || [];
+  const seen = new Set(local.map(t => t.id));
+  return [...local, ...shared.filter(t => !seen.has(t.id))];
 }
 
 function castVote(topicId, direction, btn) {
@@ -1147,14 +1154,26 @@ function addUserTopic(ch) {
   const input = document.getElementById('add-' + ch);
   const text = input.value.trim();
   if (!text) return;
-  const topics = getUserTopics(ch);
   const name = currentUserName();
   const id = 'u_' + Date.now();
-  topics.push({ id, text, cat: 'Your Addition', name });
-  localStorage.setItem(lsPrefix + 'utopics_' + ch, JSON.stringify(topics));
-  sb.from('topics').insert({ id, chapter: ch, text, participant_name: name || null }).then(() => {});
+  const topic = { id, text, cat: 'Your Addition', name };
+
+  // Save to this user's localStorage
+  const local = getLocalTopics(ch);
+  local.push(topic);
+  localStorage.setItem(lsPrefix + 'utopics_' + ch, JSON.stringify(local));
+
+  // Optimistically add to shared map so it's visible to this user immediately
+  if (!window._userTopicsMap) window._userTopicsMap = {};
+  if (!window._userTopicsMap[ch]) window._userTopicsMap[ch] = [];
+  window._userTopicsMap[ch].push(topic);
+
   input.value = '';
   renderTopics();
+
+  // Persist to Supabase so all other visitors see it on next load
+  sb.from('topics').insert({ id, chapter: ch, text, participant_name: name || null })
+    .then(({ error }) => { if (error) console.error('topic insert:', error); });
 }
 
 function buildTopicItem(t, ch) {
@@ -1187,8 +1206,8 @@ function buildTopicItem(t, ch) {
     <div class="topic-comments" id="tc_${t.id}">
       ${comments.map(c => `<div class="comment-item">${c.name ? `<span class="comment-author">${c.name}</span>` : ''}${c.text}</div>`).join('')}
       <div class="comment-input-row">
-        <input class="comment-input" id="ci_${t.id}" placeholder="Add a comment…" onkeydown="if(event.key==='Enter'){saveComment('${t.id}',this.value);this.value='';}">
-        <button class="comment-submit" onclick="const i=document.getElementById('ci_${t.id}');saveComment('${t.id}',i.value);i.value=''">Add</button>
+        <input class="comment-input" id="ci_${t.id}" placeholder="Add a comment…" onkeydown="if(event.key==='Enter'){const v=this.value;this.value='';saveComment('${t.id}',v);}">
+        <button class="comment-submit" onclick="const i=document.getElementById('ci_${t.id}');const v=i.value;i.value='';saveComment('${t.id}',v)">Add</button>
       </div>
     </div>
   `;
@@ -1408,13 +1427,13 @@ async function submitToSupabase(claimedName) {
   const name = claimedName || responses.name;
   if (!name) return;
   try {
-    const { error } = await sb.from('step 1: (a) user responses').insert({
+    const { error } = await sb.from('step 1: (a) user responses').upsert({
       participant_name: name,
       q1: responses.q1 || '', q2: responses.q2 || '',
       q3: responses.q3 || '', q4: responses.q4 || '',
       q5: responses.q5 || '', q6: responses.q6 || '',
       status: isPendingUser ? 'pending' : 'submitted'
-    });
+    }, { onConflict: 'participant_name' });
     if (error) throw error;
     // Update in-memory map immediately for instant display
     if (!isPendingUser) {
@@ -1595,6 +1614,23 @@ function saveEdit(k) {
   responses[k] = newVal;
   document.getElementById('ra_' + k).textContent = newVal;
   document.getElementById('rea_' + k).classList.remove('open');
+
+  // Persist the edit everywhere so it survives reload and appears in The Room
+  const name = identifiedName;
+  if (name) {
+    // 1. Update localStorage (source of truth for return visits)
+    localStorage.setItem('profile_' + name, JSON.stringify(responses));
+    // 2. Update in-memory map so The Room re-renders with the new answer
+    if (window._surveyMap?.[name]) window._surveyMap[name][k] = newVal;
+    // 3. Push to Supabase
+    sb.from('step 1: (a) user responses')
+      .update({ [k]: newVal })
+      .eq('participant_name', name)
+      .eq('status', 'submitted')
+      .then(({ error }) => { if (error) console.error('edit save:', error); });
+    // 4. Re-render The Room so the updated answer is visible immediately
+    renderProfiles();
+  }
 }
 
 // ─── DRAFT RESTORE ────────────────────────────────────────────────────────────
@@ -1722,6 +1758,18 @@ sendEl.addEventListener('click', send);
     console.warn('Could not load Supabase data (table may not exist yet):', e.message);
   }
   renderProfiles();
+
+  // Load user-added topics from Supabase → visible to all visitors
+  window._userTopicsMap = {};
+  try {
+    const { data: topicData } = await sb.from('topics')
+      .select('id,chapter,text,participant_name');
+    (topicData || []).forEach(t => {
+      if (!window._userTopicsMap[t.chapter]) window._userTopicsMap[t.chapter] = [];
+      window._userTopicsMap[t.chapter].push({ id: t.id, text: t.text, cat: 'Your Addition', name: t.participant_name || '' });
+    });
+    renderTopics();
+  } catch(e) { console.warn('Could not load user topics:', e.message); }
 
   // Load discussion comments from Supabase → visible to all visitors
   window._commentsMap = {};
