@@ -864,7 +864,7 @@ const sb = supabase.createClient(
 // ─── TOKEN MAP ────────────────────────────────────────────────────────────────
 const tokenMap = {
   'na8x2': 'Nadine Afari',     'ra4k1': 'Rami Ajjuri, PhD MBA',
-  'lm4x8': 'Luis Martínez, Ph.D.', 'cg2t5': 'Carlos Gutierrez',
+  'lm4x8': 'Luis Martínez, Ph.D.', 'cg2t5': 'Carlos Gutierrez, MBA',
   'am7r6': 'Andrew Moomey, MBA',   'hm1n6': 'Helen McBride, PhD',
   'rd7m3': 'Rachel Dixon',     'gz2p5': 'Greg Zapotoczny, PhD',
   'lm9q7': 'Larissa May, MD',  'ls3h4': 'Lois Sayrs, PhD',
@@ -873,8 +873,8 @@ const tokenMap = {
   'sh6m4': 'Stefany Y. Holguin, PhD', 'ew5k2': 'Eva Winter, PhD',
   'gs6w9': 'Gunjan Siroya',    'ps4t6': 'Prashant Samant',
   'rs8b1': 'Rasu Shrestha, MD, MBA',
-  'ar5m2': 'Amit Rushi',
-  'dm6p3': 'Derrick Maultsby',   'cb2n7': 'Charleson Bell, PhD',
+  'ar5m2': 'Amit Rushi, MS MBA',
+  'dm6p3': 'Derrick Maultsby, JD',   'cb2n7': 'Charleson Bell, PhD',
   'ee8k1': 'Eric Enos, PhD',
   'nm3t6': 'Nakia Melecio, PhD',
   'bg4m2': 'Balaji Gopinath'
@@ -885,11 +885,11 @@ let lsPrefix = '';  // namespaced per magic-link token so users don't share loca
 
 // ─── PARTICIPANTS ─────────────────────────────────────────────────────────────
 const attendees = new Set([
-  'Nadine Afari','Rami Ajjuri, PhD MBA','Amir Rahmani, PhD','Amit Rushi',
-  'Balaji Gopinath','Carlos Gutierrez','Derrick Maultsby','Eric Enos, PhD',
+  'Nadine Afari','Rami Ajjuri, PhD MBA','Amir Rahmani, PhD','Amit Rushi, MS MBA',
+  'Balaji Gopinath','Carlos Gutierrez, MBA','Eric Enos, PhD',
   'Frank Sawyer, MHA','John Younger, MD','Karin Koch, MPH','Larissa May, MD',
   'Lois Sayrs, PhD','Rachel Dixon','Stefany Y. Holguin, PhD','Charleson Bell, PhD',
-  'Greg Zapotoczny, PhD'
+  'Greg Zapotoczny, PhD','Luis Martínez, Ph.D.','Andrew Moomey, MBA'
 ]);
 
 const participants = [
@@ -942,7 +942,7 @@ const participants = [
     li:"https://www.linkedin.com/in/lois-sayrs-26842310a"
   },
   {
-    name:"Carlos Gutierrez", org:"Larta Institute", role:"Chief Development Officer",
+    name:"Carlos Gutierrez, MBA", org:"Larta Institute", role:"Chief Development Officer",
     i:"CG", c:"#4A6B3D", cluster:"b",
     tags:["Science Commercialization","Federal Programs","Innovation Ecosystems"],
     kw:["larta","commercialization","sbir","sttr","nih","nsf","darpa","doe","federal","tech transfer","science-to-market","international","ecosystem","mentor","nonprofit","founder"],
@@ -1006,7 +1006,7 @@ const participants = [
     li:"https://www.linkedin.com/in/rasushrestha"
   },
   {
-    name:"Amit Rushi", org:"Ecosystem Strategist", role:"",
+    name:"Amit Rushi, MS MBA", org:"Ecosystem Strategist", role:"",
     i:"AR", c:"#2E6B8A", cluster:"c",
     tags:["Ecosystem Architecture","Infrastructure","Community & Scale"],
     kw:["ecosystem","infrastructure","community","scale","innovation","network","hub","strategy","build"],
@@ -1030,7 +1030,7 @@ const participants = [
     li:"https://www.linkedin.com/in/stefanyholguin/"
   },
   {
-    name:"Derrick Maultsby", org:"Frost Brown Todd", role:"Tech & Innovation Attorney",
+    name:"Derrick Maultsby, JD", org:"Frost Brown Todd", role:"Tech & Innovation Attorney",
     i:"DM", c:"#6B3D2B", cluster:"b",
     tags:["IP & Tech Law","AI & Web3","Startup Counsel"],
     kw:["IP","legal","startup","AI","venture","tech transfer","intellectual property","web3","digital assets"],
@@ -1068,6 +1068,22 @@ const participants = [
     kw:["venture capital","AI","ML","investment","SAP","enterprise","startup","accelerator","MIT","innovation","angel investor","kubera","fund","board","growth"],
     bio:"AI/ML-focused venture investor with an operational backbone. Co-Founder and Managing Partner of Kubera Venture Capital and former Global VP of the SAP.iO Fund & Foundry at SAP. Active angel investor, advisor, and mentor across Nike+ Fuel Lab, R/GA Ventures, UpRamp/Cable Labs, Pilot44, and other innovation and accelerator programs. MIT-educated builder driving innovation and growth in board and leadership roles across startups and enterprises — and striving to be a good human.",
     li:"https://www.linkedin.com/in/balajigopinath/"
+  },
+  {
+    name:"Luis Martínez, Ph.D.", org:"Capital Factory", role:"Principal · Investor & Ecosystem Builder",
+    i:"LM", c:"#6B4A8E", cluster:"b",
+    tags:["Venture Capital","Startup Ecosystems","Innovation Strategy"],
+    kw:["capital factory","venture","investor","startup","ecosystem","entrepreneur","mentor","techstars","masschallenge","nato diana","nucleate","university","innovation","chemistry","phd","san antonio","austin"],
+    bio:"Principal at Capital Factory and ecosystem architect who has guided 300+ entrepreneurs from early stage to exit. Former Director of the Center for Innovation and Entrepreneurship at Trinity University, where he helped launch 65+ student ventures raising $60M+ in external funding — and led the program to the Nasdaq Center of Entrepreneurial Excellence award in 2021. PhD in Organic Chemistry with research roots at Scripps Research Institute. Active mentor at Techstars, MassChallenge, NATO DIANA, and Nucleate.",
+    li:"https://www.linkedin.com/in/drluismartinez/"
+  },
+  {
+    name:"Andrew Moomey, MBA", org:"UMass Chan Medical School", role:"Associate Director, Business Development & Operations",
+    i:"AM", c:"#2B6B8A", cluster:"b",
+    tags:["Tech Transfer","Life Sciences BD","Research Commercialization"],
+    kw:["tech transfer","licensing","business development","MIT","UMass","life sciences","commercialization","biotech","operations","mba","bridge","innovation"],
+    bio:"Associate Director of Business Development & Operations at UMass Chan Medical School's BRIDGE Innovation & Business Development office. Prior career in life sciences tech transfer at MIT's Technology Licensing Office, handling licensing and material transfer agreements for research discoveries. UConn molecular biology graduate with an MBA in Finance from UMass Amherst. Brings operational and deal-making experience to the science-to-market gap.",
+    li:"https://www.linkedin.com/in/andrewmoomey/"
   }
 ];
 
